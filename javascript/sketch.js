@@ -1,4 +1,4 @@
-import Navigator from "./navigator.js";
+import Navigator from "./Navigator.js";
 
 export let navigator;
 
