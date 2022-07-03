@@ -1,9 +1,12 @@
 export default class Mouse {
   constructor() {
     // img = MouseImage;
+    this.startPosition;
     this.position = 0;
     this.direction = "north"; //diretions as on a map
   }
+
+  setStartPosition() {}
 
   checkIfStepIsSuccessfull() {}
 
