@@ -12,13 +12,14 @@ socket.addEventListener("open", function (event) {
 
 // Listen for messages
 socket.addEventListener("message", function (event) {
-  console.log("Message from server", event.data);
+  console.log("Received message =>", event.data);
+  socket.send("Hello From Client1!");
 });
 
-// Send a message
-const sendMessage = () => {
-  socket.send("Hello From Client1!");
-};
+// // Send a message
+// const sendMessage = () => {
+//   socket.send("Hello From Client1!");
+// };
 
 function draw() {
   navigator = new Navigator();
