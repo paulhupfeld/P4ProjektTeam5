@@ -1,17 +1,25 @@
-import { mouse, cheese, field } from "../p5setup.js";
-// import LevelContent from "../assets/levelContent.json" assert { type: "json" };
-// import("../assets/levelContent.json", { assert: { type: "json" } });
-// const text = await Deno.readTextFile("../assets/levelContent.json");
-// const jsonData = JSON.parse(text);
+import { levelBackground1, mouse, cheese, field } from "../p5setup.js";
 
 export default class DisplayLevel {
-  constructor() {}
+  constructor() {
+    // this.boardHight = 3;
+    // this.boardWeight = 4;
+  }
+
+  setUpLevelElements(currentLevel) {
+    //import data for currentLevel from json
+
+    mouse.setStartPosition(200, 200, "north");
+
+    console.log(100);
+  }
 
   displayLevelElements() {
-    // console.log(LevelContent);
-    // console.log(jsonData);
-
+    image(levelBackground1, 0, 0);
+    // for (let i = 1; i <= this.boardHight; i++) {
+    //   rect(100, 100 * i, 100, 100);
+    // }
     mouse.display();
-    cheese.display();
+    //   cheese.display();
   }
 }

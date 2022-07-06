@@ -1,10 +1,12 @@
 import { displayLevel } from "../p5setup.js";
 
+import { mouse, cheese, field } from "../p5setup.js";
+
 export default class Navigator {
   constructor(socket) {
     this.socket = socket;
-    this.setUpLevel = true;
     this.currentLevel = 1;
+    this.setUpLevel = true;
     this.commands = ["vorwärts", "rechtsDrehen", "vorwärts", "aufsammeln"];
     this.executing = false;
     this.levelIsDone = false;
@@ -28,17 +30,17 @@ export default class Navigator {
     // };
   }
 
-  setUpLevel() {
-    if (this.setUpLevel === true) {
-      //...
-    }
-  }
-
   translateIDIntoCommand() {}
 
   navigateCommands() {}
 
   display() {
+    if (this.setUpLevel) {
+      displayLevel.setUpLevelElements(this.currentLevel);
+
+      this.setUpLevel = false;
+    }
+
     displayLevel.displayLevelElements();
   }
 }

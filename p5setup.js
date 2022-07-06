@@ -7,10 +7,12 @@ import Mouse from "./javascript/Mouse.js";
 import Cheese from "./javascript/levelElements/Cheese.js";
 import Field from "./javascript/levelElements/Field.js";
 
+export let levelBackground1, mouseImg;
 export let displayLevel, mouse, cheese, field;
 
 function preload() {
-  // actorImage = loadImage("javascript/assets/actorImage.png");
+  levelBackground1 = loadImage("assets/levelBackground1.png");
+  mouseImg = loadImage("assets/mouseImg.jpeg");
 }
 
 function setup() {
@@ -18,7 +20,7 @@ function setup() {
   frameRate(30);
 
   displayLevel = new DisplayLevel();
-  mouse = new Mouse();
+  mouse = new Mouse(mouseImg);
   cheese = new Cheese();
   field = new Field();
 }
