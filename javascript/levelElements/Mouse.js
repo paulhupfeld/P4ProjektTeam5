@@ -13,11 +13,23 @@ export default class Mouse {
 
   checkIfStepIsSuccessfull() {}
 
-  moveMouseStraight(x, y) {
-    gsap.to(this.position[0], {
-      x: x,
-      ease: "power4.out",
-    });
+  moveStraight() {
+    if (this.direction === "north") {
+      this.position.x++;
+    } else if (this.direction === "east") {
+      this.position.y--;
+    } else if (this.direction === "south") {
+      this.position.x--;
+    } else if (this.direction === "west") {
+      this.position.y++;
+    }
+
+    console.log(this.position);
+
+    // gsap.to(this.position[0], {
+    //   x: x,
+    //   ease: "power4.out",
+    // });
   }
 
   checkIfLevelIsDone() {}

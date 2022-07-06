@@ -39,7 +39,7 @@ export default class Navigator {
     if (this.setUpLevel) {
       displayLevel.setUpLevelElements(this.currentLevel);
 
-      mouse.moveMouseStraight(500, 500);
+      mouse.moveStraight();
 
       this.setUpLevel = false;
 
