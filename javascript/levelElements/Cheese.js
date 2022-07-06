@@ -1,13 +1,23 @@
 export default class Cheese {
   constructor() {
-    // img = CheeseImage;
-    this.startPosition = 0;
+    // this.img = img;
+    // this.imgSize = [100, 100];
+    this.position = [0, 0];
   }
 
-  setStartPosition() {}
+  setStartPosition(x, y) {
+    this.position = [x, y];
+  }
 
   display() {
-    fill(0, 255, 255);
-    circle(200, 100, 100, 100);
+    push();
+
+    translate(this.position[0], this.position[1]);
+
+    // imageMode(CENTER);
+    // image(this.img, 0, 0, this.imgSize[0], this.imgSize[1]);
+
+    rect(0, 0, 50, 50);
+    pop();
   }
 }

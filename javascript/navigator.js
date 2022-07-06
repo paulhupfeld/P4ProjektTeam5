@@ -1,6 +1,6 @@
 import { displayLevel } from "../p5setup.js";
 
-import { mouse, cheese, field } from "../p5setup.js";
+import { mouse, cheese } from "../p5setup.js";
 
 export default class Navigator {
   constructor(socket) {

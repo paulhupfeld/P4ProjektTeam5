@@ -5,12 +5,12 @@ new p5();
 import DisplayLevel from "./javascript/DisplayLevel.js";
 import Mouse from "./javascript/Mouse.js";
 import Cheese from "./javascript/levelElements/Cheese.js";
-import Field from "./javascript/levelElements/Field.js";
 
-export let levelBackground1, mouseImg;
-export let displayLevel, mouse, cheese, field;
+export let theaterBackgroundImage, levelBackground1, mouseImg;
+export let displayLevel, mouse, cheese;
 
 function preload() {
+  theaterBackgroundImage = loadImage("assets/Theater-Background.png");
   levelBackground1 = loadImage("assets/levelBackground1.png");
   mouseImg = loadImage("assets/mouseImg.jpeg");
 }
@@ -22,7 +22,6 @@ function setup() {
   displayLevel = new DisplayLevel();
   mouse = new Mouse(mouseImg);
   cheese = new Cheese();
-  field = new Field();
 }
 
 window.preload = preload;
