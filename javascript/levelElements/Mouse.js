@@ -13,7 +13,30 @@ export default class Mouse {
 
   checkIfStepIsSuccessfull() {}
 
-  moveMouse() {}
+  moveMouseStraight(x, y) {
+    // if (this.prioBoardIsActive) {
+    // gsap.to(this.position[0], {
+    //   x: x,
+    //   ease: "power4.out",
+    // });
+    // gsap.to(this.position[1], {
+    //   y: y,
+    //   ease: "power4.out",
+    // });
+    // } else {
+    //   gsap.to(this.boardPosition, {
+    //     duration: 0.8,
+    //     scale: 0.13,
+    //     x: 1150,
+    //     ease: "power4.out",
+    //   });
+    //   gsap.to(this.boardPosition, {
+    //     duration: 1,
+    //     y: 568,
+    //     ease: "power4.out",
+    //   });
+    // }
+  }
 
   checkIfLevelIsDone() {}
 

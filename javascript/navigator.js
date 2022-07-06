@@ -10,6 +10,7 @@ export default class Navigator {
     this.commands = ["vorwärts", "rechtsDrehen", "vorwärts", "aufsammeln"];
     this.executing = false;
     this.levelIsDone = false;
+    // this.rectPosition = { x: 100, y: 100 };
   }
 
   wsCommunicator() {
@@ -35,12 +36,23 @@ export default class Navigator {
   navigateCommands() {}
 
   display() {
+    clear();
+
     if (this.setUpLevel) {
       displayLevel.setUpLevelElements(this.currentLevel);
 
+      mouse.moveMouseStraight(500, 500);
+
       this.setUpLevel = false;
+
+      // gsap.to(this.rectPosition, {
+      //   x: 350,
+      //   ease: "power4.out",
+      // });
     }
 
     displayLevel.displayLevelElements();
+
+    // rect(this.rectPosition.x, this.rectPosition.y, 100, 100);
   }
 }

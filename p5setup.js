@@ -3,7 +3,7 @@ window.setup = setup;
 new p5();
 
 import DisplayLevel from "./javascript/DisplayLevel.js";
-import Mouse from "./javascript/Mouse.js";
+import Mouse from "./javascript/levelElements/Mouse.js";
 import Cheese from "./javascript/levelElements/Cheese.js";
 
 export let theaterBackgroundImage, levelBackground1, mouseImg;

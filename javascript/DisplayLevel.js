@@ -27,6 +27,7 @@ export default class DisplayLevel {
     );
   }
 
+  //move to Navigator
   returnCoordinates(coordinates) {
     //import data for currentLevel from json
     let centerOfField11 = [448.5, 272];
