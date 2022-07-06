@@ -1,26 +1,15 @@
 import { levelBackground1, mouse, cheese } from "../p5setup.js";
-import * as functions from "./functions/functions.js";
 
 export default class DisplayLevel {
   constructor() {
-    // this.boardHight = 3;
-    // this.boardWeight = 4;
     this.currentLevel;
   }
 
   setUpLevelElements(currentLevel) {
-    //import data for currentLevel from json
-    this.currentLevel = currentLevel;
-    mouse.setStartPosition(
-      functions.translateFieldNumberIntoCoordinates(1, 2)[0],
-      functions.translateFieldNumberIntoCoordinates(1, 2)[1],
-      "north"
-    );
+    this.currentLevel = currentLevel; //import data for currentLevel from json
 
-    cheese.setStartPosition(
-      functions.translateFieldNumberIntoCoordinates(3, 2)[0],
-      functions.translateFieldNumberIntoCoordinates(3, 2)[1]
-    );
+    mouse.setStartPosition(1, 1, "east");
+    cheese.setStartPosition(3, 2);
   }
 
   displayLevelElements() {

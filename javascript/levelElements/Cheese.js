@@ -1,3 +1,5 @@
+import * as functions from "../functions/functions.js";
+
 export default class Cheese {
   constructor() {
     // this.img = img;
@@ -12,8 +14,16 @@ export default class Cheese {
   display() {
     push();
 
-    translate(this.position.x, this.position.y);
-
+    translate(
+      functions.translateFieldNumberIntoCoordinates(
+        this.position.x,
+        this.position.y
+      )[0],
+      functions.translateFieldNumberIntoCoordinates(
+        this.position.x,
+        this.position.y
+      )[1]
+    );
     // imageMode(CENTER);
     // image(this.img, 0, 0, this.imgSize[0], this.imgSize[1]);
 

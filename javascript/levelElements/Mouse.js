@@ -1,9 +1,12 @@
+import { displayLevel } from "../../p5setup.js";
+import * as functions from "../functions/functions.js";
+
 export default class Mouse {
   constructor(img) {
     this.img = img;
     this.imgSize = [100, 100];
     this.position = { x: 0, y: 0 };
-    this.direction = "north"; //diretions as on a map
+    this.direction = ""; //diretions as on a map
   }
 
   setStartPosition(x, y, direction) {
@@ -11,25 +14,51 @@ export default class Mouse {
     this.direction = direction;
   }
 
-  checkIfStepIsSuccessfull() {}
-
   moveStraight() {
+    let newCoordinate;
+
+    //anmimation as function??
     if (this.direction === "north") {
-      this.position.x++;
+      newCoordinate = this.position.y + 1;
+
+      functions.checkIfStepIsPossible(this.position.x, newCoordinate);
+
+      gsap.to(this.position, {
+        y: newCoordinate,
+        duration: 1.5,
+        ease: "power2.out",
+      });
     } else if (this.direction === "east") {
-      this.position.y--;
+      newCoordinate = this.position.x + 1;
+
+      functions.checkIfStepIsPossible(newCoordinate, this.position.y);
+
+      gsap.to(this.position, {
+        x: newCoordinate,
+        duration: 1.5,
+        ease: "power2.out",
+      });
     } else if (this.direction === "south") {
-      this.position.x--;
+      newCoordinate = this.position.y - 1;
+
+      functions.checkIfStepIsPossible(this.position.x, newCoordinate);
+
+      gsap.to(this.position, {
+        y: newCoordinate,
+        duration: 1.5,
+        ease: "power2.out",
+      });
     } else if (this.direction === "west") {
-      this.position.y++;
+      newCoordinate = this.position.x - 1;
+
+      functions.checkIfStepIsPossible(newCoordinate, this.position.y);
+
+      gsap.to(this.position, {
+        x: newCoordinate,
+        duration: 1.5,
+        ease: "power2.out",
+      });
     }
-
-    console.log(this.position);
-
-    // gsap.to(this.position[0], {
-    //   x: x,
-    //   ease: "power4.out",
-    // });
   }
 
   checkIfLevelIsDone() {}
@@ -37,7 +66,16 @@ export default class Mouse {
   display() {
     push();
 
-    translate(this.position.x, this.position.y);
+    translate(
+      functions.translateFieldNumberIntoCoordinates(
+        this.position.x,
+        this.position.y
+      )[0],
+      functions.translateFieldNumberIntoCoordinates(
+        this.position.x,
+        this.position.y
+      )[1]
+    );
 
     if (this.direction === "north") {
       rotate((PI / 180) * 0);
