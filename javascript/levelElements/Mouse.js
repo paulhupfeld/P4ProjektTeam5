@@ -2,40 +2,22 @@ export default class Mouse {
   constructor(img) {
     this.img = img;
     this.imgSize = [100, 100];
-    this.position = [0, 0];
+    this.position = { x: 0, y: 0 };
     this.direction = "north"; //diretions as on a map
   }
 
   setStartPosition(x, y, direction) {
-    this.position = [x, y];
+    this.position = { x: x, y: y };
     this.direction = direction;
   }
 
   checkIfStepIsSuccessfull() {}
 
   moveMouseStraight(x, y) {
-    // if (this.prioBoardIsActive) {
-    // gsap.to(this.position[0], {
-    //   x: x,
-    //   ease: "power4.out",
-    // });
-    // gsap.to(this.position[1], {
-    //   y: y,
-    //   ease: "power4.out",
-    // });
-    // } else {
-    //   gsap.to(this.boardPosition, {
-    //     duration: 0.8,
-    //     scale: 0.13,
-    //     x: 1150,
-    //     ease: "power4.out",
-    //   });
-    //   gsap.to(this.boardPosition, {
-    //     duration: 1,
-    //     y: 568,
-    //     ease: "power4.out",
-    //   });
-    // }
+    gsap.to(this.position[0], {
+      x: x,
+      ease: "power4.out",
+    });
   }
 
   checkIfLevelIsDone() {}
@@ -43,7 +25,7 @@ export default class Mouse {
   display() {
     push();
 
-    translate(this.position[0], this.position[1]);
+    translate(this.position.x, this.position.y);
 
     if (this.direction === "north") {
       rotate((PI / 180) * 0);

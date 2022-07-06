@@ -1,15 +1,10 @@
-import {
-  theaterBackgroundImage,
-  levelBackground1,
-  mouse,
-  cheese,
-} from "../p5setup.js";
+import { levelBackground1, mouse, cheese } from "../p5setup.js";
+import * as functions from "./functions/functions.js";
 
 export default class DisplayLevel {
   constructor() {
     // this.boardHight = 3;
     // this.boardWeight = 4;
-    this.coordinates = [1, 1];
     this.currentLevel;
   }
 
@@ -17,33 +12,15 @@ export default class DisplayLevel {
     //import data for currentLevel from json
     this.currentLevel = currentLevel;
     mouse.setStartPosition(
-      this.returnCoordinates([2, 3])[0],
-      this.returnCoordinates([2, 3])[1],
+      functions.translateFieldNumberIntoCoordinates(1, 2)[0],
+      functions.translateFieldNumberIntoCoordinates(1, 2)[1],
       "north"
     );
+
     cheese.setStartPosition(
-      this.returnCoordinates([3, 2])[0],
-      this.returnCoordinates([3, 2])[1]
+      functions.translateFieldNumberIntoCoordinates(3, 2)[0],
+      functions.translateFieldNumberIntoCoordinates(3, 2)[1]
     );
-  }
-
-  //move to Navigator
-  returnCoordinates(coordinates) {
-    //import data for currentLevel from json
-    let centerOfField11 = [448.5, 272];
-    let distanceToNextField = [137, 132];
-
-    let XToReturn =
-      centerOfField11[0] + distanceToNextField[0] * (coordinates[0] - 1);
-
-    let YToReturn =
-      centerOfField11[1] + distanceToNextField[1] * (coordinates[1] - 1);
-
-    // console.log(XToReturn + ", " + YToReturn);
-    // let coordinatesToReturn = XToReturn + ", " + YToReturn;
-    // return coordinatesToReturn;
-
-    return [XToReturn, YToReturn];
   }
 
   displayLevelElements() {

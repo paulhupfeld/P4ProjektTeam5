@@ -1,6 +1,6 @@
-import { displayLevel } from "../p5setup.js";
+import { displayLevel, mouse } from "../p5setup.js";
 
-import { mouse, cheese } from "../p5setup.js";
+// & translateIDIntoCommand
 
 export default class Navigator {
   constructor(socket) {
@@ -31,8 +31,6 @@ export default class Navigator {
     // };
   }
 
-  translateIDIntoCommand() {}
-
   navigateCommands() {}
 
   display() {
@@ -52,7 +50,5 @@ export default class Navigator {
     }
 
     displayLevel.displayLevelElements();
-
-    // rect(this.rectPosition.x, this.rectPosition.y, 100, 100);
   }
 }
