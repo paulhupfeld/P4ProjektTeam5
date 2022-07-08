@@ -7,7 +7,7 @@ export default class Mouse {
     this.direction = ""; //diretions as on a map
   }
 
-  setStartPosition(x, y, direction) {
+  setUp(x, y, direction) {
     this.position = { x: x, y: y };
     this.direction = direction;
   }
@@ -15,6 +15,7 @@ export default class Mouse {
   moveStraight() {
     let newCoordinate;
 
+    //merge with simmilar function in functions.js
     //anmimation as function??
     if (this.direction === "north") {
       newCoordinate = this.position.y + 1;

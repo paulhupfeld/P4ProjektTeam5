@@ -1,3 +1,5 @@
+import { levelContent } from "../../assets/levelContent.js";
+
 export function translateIDIntoCommand() {}
 
 export function translateFieldNumberIntoCoordinates(fieldX, fieldY) {
@@ -16,23 +18,34 @@ export function translateFieldNumberIntoCoordinates(fieldX, fieldY) {
   return [XToReturn, YToReturn];
 }
 
-let boardHight = 3; //import data for currentLevel from json
-let boardWeight = 4; //import data for currentLevel from json
+export function checkIfStepIsPossible(mouse, currentLevel) {
+  let newCoordinate;
+  let newPosition;
 
-export function checkIfStepIsPossible(x, y) {
-  if (x <= boardWeight && x > 0 && y <= boardHight && y > 0) {
-    console.log(x, y);
+  //merge with simmilar function in Mouse.js
+  if (mouse.direction === "north") {
+    newCoordinate = mouse.position.y + 1;
+    newPosition = { x: mouse.position.x, y: newCoordinate };
+  } else if (mouse.direction === "east") {
+    newCoordinate = mouse.position.x + 1;
+    newPosition = { x: newCoordinate, y: mouse.position.y };
+  } else if (mouse.direction === "south") {
+    newCoordinate = mouse.position.y - 1;
+    newPosition = { x: mouse.position.x, y: newCoordinate };
+  } else if (mouse.direction === "west") {
+    newCoordinate = mouse.position.x - 1;
+    newPosition = { x: newCoordinate, y: mouse.position.y };
+  }
 
-    // console.log("true");
-    // console.log("y: " + y + ", boardHight: " + boardHight);
-    // console.log("x: " + x + ", boardWeight: " + boardWeight);
+  let nextStepIsPossible = false;
 
+  levelContent[currentLevel].fields.map((field) => {
+    if (field.x === newPosition.x && field.y === newPosition.y) {
+      nextStepIsPossible = true;
+    }
+  });
+
+  if (nextStepIsPossible) {
     return true;
-  } else {
-    // console.log("false");
-    // console.log("y: " + y + ", boardHight: " + boardHight);
-    // console.log("x: " + x + ", boardWeight: " + boardWeight);
-
-    return false;
   }
 }

@@ -40,9 +40,11 @@ export default class Navigator {
     // }
   }
 
-  MoveStaightCommand() {
-    if (functions.checkIfStepIsPossible(newCoordinate, this.position.y)) {
+  moveStaightCommand() {
+    if (functions.checkIfStepIsPossible(mouse, this.currentLevel)) {
       mouse.moveStraight();
+    } else {
+      this.levelFail = true;
     }
   }
 
@@ -54,9 +56,9 @@ export default class Navigator {
 
       this.setUpLevel = false;
 
-      // mouse.moveStraight();
+      this.moveStaightCommand();
     }
 
-    displayLevel.displayLevelElements();
+    displayLevel.displayLevelElements(this.currentLevel);
   }
 }

@@ -5,9 +5,10 @@ export default class Cheese {
     // this.img = img;
     // this.imgSize = [100, 100];
     this.position = { x: 0, y: 0 };
+    // this.alredyEaten = false;
   }
 
-  setStartPosition(x, y) {
+  setUp(x, y) {
     this.position = { x: x, y: y };
   }
 
