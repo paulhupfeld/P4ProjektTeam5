@@ -6,7 +6,7 @@ export default class Navigator {
     this.socket = socket;
     this.currentLevel = 1;
     this.setUpLevel = true;
-    this.commands = ["vorwärts", "rechtsDrehen", "vorwärts", "aufsammeln"];
+    // this.commands = ["vorwärts", "rechtsDrehen", "vorwärts", "aufsammeln"];
     this.executing = false;
     this.levelSuccess = false;
     this.levelFail = false;
@@ -31,13 +31,35 @@ export default class Navigator {
   }
 
   navigateCommands() {
-    // 5sekDelay
-    // Commands
-    // Over: check if cheese is eaten (functions -cheese.isEaten){
-    // LevelSuccess = True
-    // Else
-    // LevelSuccess = false
-    // }
+    //push functions into array
+    let commands = ["moveStaight", "turnLeft", "moveStaight", "eatCheese"];
+
+    var intervalCount = 0;
+    var self = this;
+
+    var intervalID = setInterval(function () {
+      if (commands[intervalCount] === "moveStaight") {
+        self.moveStaightCommand();
+      } else if (commands[intervalCount] === "turnLeft") {
+        mouse.turnLeft();
+      } else if (commands[intervalCount] === "turnRight") {
+        mouse.turnRight();
+      } else if (commands[intervalCount] === "eatCheese") {
+        mouse.eatCheese();
+      }
+
+      if (++intervalCount === commands.length) {
+        window.clearInterval(intervalID);
+
+        if (cheese.isEaten) {
+          this.levelSuccess = true;
+          console.log("win");
+        } else {
+          this.levelFail = true;
+          console.log("loose");
+        }
+      }
+    }, 1500);
   }
 
   moveStaightCommand() {
@@ -45,6 +67,8 @@ export default class Navigator {
       mouse.moveStraight();
     } else {
       this.levelFail = true;
+      window.clearInterval(intervalID);
+      console.log("clearinterval");
     }
   }
 
@@ -57,8 +81,8 @@ export default class Navigator {
       this.setUpLevel = false;
 
       // this.moveStaightCommand();
-      // mouse.turnLeft();
-      // mouse.eatCheese();
+
+      this.navigateCommands();
     }
 
     displayLevel.displayLevelElements(this.currentLevel);

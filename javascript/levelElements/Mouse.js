@@ -86,9 +86,7 @@ export default class Mouse {
       this.position.y === cheese.position.y
     ) {
       cheese.eat();
-      console.log("true");
     }
-    console.log("hi");
   }
 
   display() {

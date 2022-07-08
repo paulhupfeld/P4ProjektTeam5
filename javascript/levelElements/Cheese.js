@@ -3,9 +3,8 @@ import * as functions from "../functions/functions.js";
 export default class Cheese {
   constructor(img) {
     this.img = img;
-    // this.imgSize = [100, 100];
     this.position = { x: 0, y: 0 };
-    this.alredyEaten = false;
+    this.isEaten = false;
   }
 
   setUp(x, y) {
@@ -13,11 +12,11 @@ export default class Cheese {
   }
 
   eat() {
-    this.alredyEaten = true;
+    this.isEaten = true;
   }
 
   display() {
-    if (this.alredyEaten === false) {
+    if (this.isEaten === false) {
       push();
 
       translate(
