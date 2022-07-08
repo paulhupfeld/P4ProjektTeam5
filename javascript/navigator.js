@@ -32,19 +32,12 @@ export default class Navigator {
   }
 
   navigateCommands() {
-    //push functions into array
-
     //in translateIDIntoCommands
-    this.commands = [
-      "moveStaight",
-      "turnLeft",
-      "moveStaight",
-      "eatCheese",
-      "moveStaight",
-    ];
+    //push functions into array
+    this.commands = ["moveStaight", "turnLeft", "moveStaight", "eatCheese"];
 
-    var intervalCount = 0;
-    var self = this;
+    let intervalCount = 0;
+    let self = this;
 
     this.intervalID = setInterval(function () {
       if (self.commands[intervalCount] === "moveStaight") {
@@ -60,13 +53,17 @@ export default class Navigator {
       if (++intervalCount === self.commands.length) {
         window.clearInterval(this.intervalID);
 
-        if (cheese.isEaten) {
-          this.levelSuccess = true;
-          console.log("win");
-        } else {
-          this.levelFail = true;
-          console.log("loose");
-        }
+        setTimeout(function () {
+          self.hasCheeseInItsHand = true;
+
+          if (cheese.isEaten) {
+            this.levelSuccess = true;
+            console.log("win");
+          } else {
+            this.levelFail = true;
+            console.log("loose");
+          }
+        }, 2000);
       }
     }, 1500);
   }

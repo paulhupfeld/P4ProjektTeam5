@@ -2,9 +2,10 @@ import { cheese } from "../../p5setup.js";
 import * as functions from "../functions/functions.js";
 
 export default class Mouse {
-  constructor(normalImg, dizzyImg) {
+  constructor(normalImg, dizzyImg, cheeseImg) {
     this.normalImg = normalImg;
     this.dizzyImg = dizzyImg;
+    this.cheeseImg = cheeseImg;
     this.position = { x: 0, y: 0 };
     this.direction = ""; //diretions as on a map
     this.isDizzy = false;
@@ -17,42 +18,36 @@ export default class Mouse {
   }
 
   moveStraight() {
-    let newCoordinate;
+    let newCoordinates = { x: this.position.x, y: this.position.y };
 
     //merge with simmilar function in functions.js
-    //anmimation as function??
     if (this.direction === "north") {
-      newCoordinate = this.position.y + 1;
-
-      gsap.to(this.position, {
-        y: newCoordinate,
-        duration: 1.5,
-        ease: "power2.out",
-      });
+      newCoordinates.y = this.position.y + 1;
     } else if (this.direction === "east") {
-      newCoordinate = this.position.x + 1;
-
-      gsap.to(this.position, {
-        x: newCoordinate,
-        duration: 1.5,
-        ease: "power2.out",
-      });
+      newCoordinates.x = this.position.x + 1;
     } else if (this.direction === "south") {
-      newCoordinate = this.position.y - 1;
-
-      gsap.to(this.position, {
-        y: newCoordinate,
-        duration: 1.5,
-        ease: "power2.out",
-      });
+      newCoordinates.y = this.position.y - 1;
     } else if (this.direction === "west") {
-      newCoordinate = this.position.x - 1;
+      newCoordinates.x = this.position.x - 1;
+    }
 
-      gsap.to(this.position, {
-        x: newCoordinate,
-        duration: 1.5,
-        ease: "power2.out",
-      });
+    gsap.to(this.position, {
+      x: newCoordinates.x,
+      y: newCoordinates.y,
+      duration: 1.5,
+      ease: "power2.out",
+    });
+
+    if (
+      newCoordinates.x === cheese.position.x &&
+      newCoordinates.y === cheese.position.y
+    ) {
+      let self = this;
+      setTimeout(function () {
+        self.hasCheeseInItsHand = true;
+        cheese.isInHand = true;
+      }, 700);
+      //ruckelt!!
     }
   }
 
@@ -83,10 +78,7 @@ export default class Mouse {
   }
 
   eatCheese() {
-    if (
-      this.position.x === cheese.position.x &&
-      this.position.y === cheese.position.y
-    ) {
+    if (this.hasCheeseInItsHand) {
       cheese.eat();
     }
   }
@@ -105,6 +97,8 @@ export default class Mouse {
       )[1]
     );
 
+    // let rotation = {};
+
     if (this.direction === "north") {
       rotate((PI / 180) * 0);
     } else if (this.direction === "east") {
@@ -120,10 +114,11 @@ export default class Mouse {
 
     if (this.isDizzy) {
       image(this.dizzyImg, 0, 0);
+    } else if (this.hasCheeseInItsHand) {
+      image(this.cheeseImg, 0, 0);
     } else {
       image(this.normalImg, 0, 0);
     }
-    //else if     this.hasCheeseInItsHand
 
     pop();
   }

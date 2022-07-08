@@ -5,6 +5,7 @@ export default class Cheese {
     this.img = img;
     this.position = { x: 0, y: 0 };
     this.isEaten = false;
+    this.isInHand = false;
   }
 
   setUp(x, y) {
@@ -16,7 +17,7 @@ export default class Cheese {
   }
 
   display() {
-    if (this.isEaten === false) {
+    if (this.isEaten === false && this.isInHand === false) {
       push();
 
       translate(
