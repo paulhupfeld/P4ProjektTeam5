@@ -1,10 +1,8 @@
-import { displayLevel } from "../../p5setup.js";
 import * as functions from "../functions/functions.js";
 
 export default class Mouse {
   constructor(img) {
     this.img = img;
-    this.imgSize = [100, 100];
     this.position = { x: 0, y: 0 };
     this.direction = ""; //diretions as on a map
   }
@@ -21,8 +19,6 @@ export default class Mouse {
     if (this.direction === "north") {
       newCoordinate = this.position.y + 1;
 
-      functions.checkIfStepIsPossible(this.position.x, newCoordinate);
-
       gsap.to(this.position, {
         y: newCoordinate,
         duration: 1.5,
@@ -30,8 +26,6 @@ export default class Mouse {
       });
     } else if (this.direction === "east") {
       newCoordinate = this.position.x + 1;
-
-      functions.checkIfStepIsPossible(newCoordinate, this.position.y);
 
       gsap.to(this.position, {
         x: newCoordinate,
@@ -41,8 +35,6 @@ export default class Mouse {
     } else if (this.direction === "south") {
       newCoordinate = this.position.y - 1;
 
-      functions.checkIfStepIsPossible(this.position.x, newCoordinate);
-
       gsap.to(this.position, {
         y: newCoordinate,
         duration: 1.5,
@@ -51,8 +43,6 @@ export default class Mouse {
     } else if (this.direction === "west") {
       newCoordinate = this.position.x - 1;
 
-      functions.checkIfStepIsPossible(newCoordinate, this.position.y);
-
       gsap.to(this.position, {
         x: newCoordinate,
         duration: 1.5,
@@ -60,8 +50,6 @@ export default class Mouse {
       });
     }
   }
-
-  checkIfLevelIsDone() {}
 
   display() {
     push();
@@ -88,7 +76,8 @@ export default class Mouse {
     }
 
     imageMode(CENTER);
-    image(this.img, 0, 0, this.imgSize[0], this.imgSize[1]);
+    scale(0.033);
+    image(this.img, 0, 0);
 
     pop();
   }

@@ -1,21 +1,21 @@
-import { levelBackground1, mouse, cheese } from "../p5setup.js";
+import { mausylinth1 } from "../p5setup.js";
+import { mouse, cheese } from "../p5setup.js";
+import { levelContent } from "../assets/levelContent.js";
 
 export default class DisplayLevel {
-  constructor() {
-    this.currentLevel;
-  }
+  constructor() {}
 
   setUpLevelElements(currentLevel) {
-    this.currentLevel = currentLevel; //import data for currentLevel from json
+    //import data for currentLevel from json
 
-    mouse.setStartPosition(1, 1, "east");
+    mouse.setStartPosition(1, 1, "north");
     cheese.setStartPosition(3, 2);
   }
 
   displayLevelElements() {
     push();
     translate(0, 15);
-    image(levelBackground1, 0, 0, 1280, 690);
+    image(mausylinth1, 0, 0, 1280, 690); //from current data
     pop();
 
     mouse.display();

@@ -6,13 +6,12 @@ import DisplayLevel from "./javascript/DisplayLevel.js";
 import Mouse from "./javascript/levelElements/Mouse.js";
 import Cheese from "./javascript/levelElements/Cheese.js";
 
-export let theaterBackgroundImage, levelBackground1, mouseImg;
+export let mausylinth1, mouseImg;
 export let displayLevel, mouse, cheese;
 
 function preload() {
-  theaterBackgroundImage = loadImage("assets/Theater-Background.png");
-  levelBackground1 = loadImage("assets/levelBackground1.png");
-  mouseImg = loadImage("assets/mouseImg.jpeg");
+  mausylinth1 = loadImage("assets/mausylinth1.png");
+  mouseImg = loadImage("assets/mouseImg.png");
 }
 
 function setup() {

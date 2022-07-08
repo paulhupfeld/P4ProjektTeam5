@@ -1,6 +1,5 @@
 import { displayLevel, mouse } from "../p5setup.js";
-
-// & translateIDIntoCommand
+import * as functions from "./functions/functions.js";
 
 export default class Navigator {
   constructor(socket) {
@@ -9,7 +8,8 @@ export default class Navigator {
     this.setUpLevel = true;
     this.commands = ["vorwärts", "rechtsDrehen", "vorwärts", "aufsammeln"];
     this.executing = false;
-    this.levelIsDone = false;
+    this.levelSuccess = false;
+    this.levelFail = false;
   }
 
   wsCommunicator() {
@@ -30,7 +30,21 @@ export default class Navigator {
     // };
   }
 
-  navigateCommands() {}
+  navigateCommands() {
+    // 5sekDelay
+    // Commands
+    // Over: check if cheese is eaten (functions -cheese.isEaten){
+    // LevelSuccess = True
+    // Else
+    // LevelSuccess = false
+    // }
+  }
+
+  MoveStaightCommand() {
+    if (functions.checkIfStepIsPossible(newCoordinate, this.position.y)) {
+      mouse.moveStraight();
+    }
+  }
 
   display() {
     clear();
@@ -40,7 +54,7 @@ export default class Navigator {
 
       this.setUpLevel = false;
 
-      mouse.moveStraight();
+      // mouse.moveStraight();
     }
 
     displayLevel.displayLevelElements();

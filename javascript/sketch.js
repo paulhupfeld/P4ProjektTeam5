@@ -7,8 +7,9 @@ const socket = new WebSocket("ws://localhost:3000");
 
 navigator = new Navigator(socket);
 
+navigator.wsCommunicator();
+
 function draw() {
-  navigator.wsCommunicator();
   navigator.display();
 }
 

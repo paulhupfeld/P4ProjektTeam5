@@ -21,13 +21,15 @@ let boardWeight = 4; //import data for currentLevel from json
 
 export function checkIfStepIsPossible(x, y) {
   if (x <= boardWeight && x > 0 && y <= boardHight && y > 0) {
-    console.log("true");
+    console.log(x, y);
+
+    // console.log("true");
     // console.log("y: " + y + ", boardHight: " + boardHight);
     // console.log("x: " + x + ", boardWeight: " + boardWeight);
 
     return true;
   } else {
-    console.log("false");
+    // console.log("false");
     // console.log("y: " + y + ", boardHight: " + boardHight);
     // console.log("x: " + x + ", boardWeight: " + boardWeight);
 
