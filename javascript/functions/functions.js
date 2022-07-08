@@ -1,6 +1,6 @@
 import { levelContent } from "../../assets/levelContent.js";
 
-export function translateIDIntoCommand() {}
+export function translateIDIntoCommands() {}
 
 export function translateFieldNumberIntoCoordinates(fieldX, fieldY) {
   //import data for currentLevel from json

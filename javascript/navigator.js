@@ -4,9 +4,10 @@ import * as functions from "./functions/functions.js";
 export default class Navigator {
   constructor(socket) {
     this.socket = socket;
+    this.intervalID;
     this.currentLevel = 1;
     this.setUpLevel = true;
-    // this.commands = ["vorwärts", "rechtsDrehen", "vorwärts", "aufsammeln"];
+    this.commands = [];
     this.executing = false;
     this.levelSuccess = false;
     this.levelFail = false;
@@ -32,24 +33,32 @@ export default class Navigator {
 
   navigateCommands() {
     //push functions into array
-    let commands = ["moveStaight", "turnLeft", "moveStaight", "eatCheese"];
+
+    //in translateIDIntoCommands
+    this.commands = [
+      "moveStaight",
+      "turnLeft",
+      "moveStaight",
+      "eatCheese",
+      "moveStaight",
+    ];
 
     var intervalCount = 0;
     var self = this;
 
-    var intervalID = setInterval(function () {
-      if (commands[intervalCount] === "moveStaight") {
+    this.intervalID = setInterval(function () {
+      if (self.commands[intervalCount] === "moveStaight") {
         self.moveStaightCommand();
-      } else if (commands[intervalCount] === "turnLeft") {
+      } else if (self.commands[intervalCount] === "turnLeft") {
         mouse.turnLeft();
-      } else if (commands[intervalCount] === "turnRight") {
+      } else if (self.commands[intervalCount] === "turnRight") {
         mouse.turnRight();
-      } else if (commands[intervalCount] === "eatCheese") {
+      } else if (self.commands[intervalCount] === "eatCheese") {
         mouse.eatCheese();
       }
 
-      if (++intervalCount === commands.length) {
-        window.clearInterval(intervalID);
+      if (++intervalCount === self.commands.length) {
+        window.clearInterval(this.intervalID);
 
         if (cheese.isEaten) {
           this.levelSuccess = true;
@@ -67,8 +76,9 @@ export default class Navigator {
       mouse.moveStraight();
     } else {
       this.levelFail = true;
-      window.clearInterval(intervalID);
-      console.log("clearinterval");
+      // mouse.moveStraightAgaintBarrier();
+      window.clearInterval(this.intervalID);
+      console.log("loose");
     }
   }
 

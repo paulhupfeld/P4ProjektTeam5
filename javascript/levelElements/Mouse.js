@@ -56,6 +56,8 @@ export default class Mouse {
     }
   }
 
+  moveStraightAgaintBarrier() {}
+
   turnLeft() {
     if (this.direction === "north") {
       this.direction = "west";
