@@ -1,4 +1,4 @@
-import { displayLevel, mouse } from "../p5setup.js";
+import { displayLevel, mouse, cheese } from "../p5setup.js";
 import * as functions from "./functions/functions.js";
 
 export default class Navigator {
@@ -56,7 +56,9 @@ export default class Navigator {
 
       this.setUpLevel = false;
 
-      this.moveStaightCommand();
+      // this.moveStaightCommand();
+      // mouse.turnLeft();
+      // mouse.eatCheese();
     }
 
     displayLevel.displayLevelElements(this.currentLevel);

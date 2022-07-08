@@ -32,7 +32,7 @@ export default class DisplayLevel {
     image(mausylinth1, 0, 0, 1280, 690);
     pop();
 
-    mouse.display();
     cheese.display();
+    mouse.display();
   }
 }

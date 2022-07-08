@@ -1,10 +1,14 @@
+import { cheese } from "../../p5setup.js";
 import * as functions from "../functions/functions.js";
 
 export default class Mouse {
-  constructor(img) {
-    this.img = img;
+  constructor(normalImg, dizzyImg) {
+    this.normalImg = normalImg;
+    this.dizzyImg = dizzyImg;
     this.position = { x: 0, y: 0 };
     this.direction = ""; //diretions as on a map
+    this.isDizzy = false;
+    this.hasCheeseInItsHand = false;
   }
 
   setUp(x, y, direction) {
@@ -52,6 +56,41 @@ export default class Mouse {
     }
   }
 
+  turnLeft() {
+    if (this.direction === "north") {
+      this.direction = "west";
+    } else if (this.direction === "east") {
+      this.direction = "north";
+    } else if (this.direction === "south") {
+      this.direction = "east";
+    } else if (this.direction === "west") {
+      this.direction = "south";
+    }
+  }
+
+  turnRight() {
+    if (this.direction === "north") {
+      this.direction = "east";
+    } else if (this.direction === "east") {
+      this.direction = "south";
+    } else if (this.direction === "south") {
+      this.direction = "west";
+    } else if (this.direction === "west") {
+      this.direction = "north";
+    }
+  }
+
+  eatCheese() {
+    if (
+      this.position.x === cheese.position.x &&
+      this.position.y === cheese.position.y
+    ) {
+      cheese.eat();
+      console.log("true");
+    }
+    console.log("hi");
+  }
+
   display() {
     push();
 
@@ -78,7 +117,13 @@ export default class Mouse {
 
     imageMode(CENTER);
     scale(0.033);
-    image(this.img, 0, 0);
+
+    if (this.isDizzy) {
+      image(this.dizzyImg, 0, 0);
+    } else {
+      image(this.normalImg, 0, 0);
+    }
+    //else if     this.hasCheeseInItsHand
 
     pop();
   }
