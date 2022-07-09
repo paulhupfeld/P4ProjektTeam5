@@ -34,18 +34,7 @@ export default class Navigator {
   navigateCommands() {
     //in translateIDIntoCommands
     //push functions into array
-    // this.commands = ["moveStaight", "turnLeft", "moveStaight", "eatCheese"];
-    this.commands = [
-      "moveStaight",
-      "turnLeft",
-      "moveStaight",
-      "turnRight",
-      "moveStaight",
-      "turnRight",
-      "turnRight",
-      "moveStaight",
-      "eatCheese",
-    ];
+    this.commands = ["moveStaight", "turnLeft", "moveStaight", "eatCheese"];
 
     let intervalCount = 0;
     let self = this;

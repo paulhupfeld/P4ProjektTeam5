@@ -7,26 +7,29 @@ export default class Mouse {
     this.dizzyImg = dizzyImg;
     this.cheeseImg = cheeseImg;
     this.position = { x: 0, y: 0 };
-    this.direction = ""; //diretions as on a map
+    this.direction = { name: "", rotation: 0 }; //first: name as on a map
+    // this.rotation;
     this.isDizzy = false;
   }
 
   setUp(x, y, direction) {
     this.position = { x: x, y: y };
-    this.direction = direction;
+    this.direction.name = direction;
+    this.direction.rotation =
+      functions.translateDirectionIntoRotation(direction);
   }
 
   moveStraight() {
     let newCoordinates = { x: this.position.x, y: this.position.y };
 
     //merge with simmilar function in functions.js
-    if (this.direction === "north") {
+    if (this.direction.name === "north") {
       newCoordinates.y = this.position.y + 1;
-    } else if (this.direction === "east") {
+    } else if (this.direction.name === "east") {
       newCoordinates.x = this.position.x + 1;
-    } else if (this.direction === "south") {
+    } else if (this.direction.name === "south") {
       newCoordinates.y = this.position.y - 1;
-    } else if (this.direction === "west") {
+    } else if (this.direction.name === "west") {
       newCoordinates.x = this.position.x - 1;
     }
 
@@ -55,13 +58,13 @@ export default class Mouse {
     let oldCoordinates = { x: this.position.x, y: this.position.y };
 
     //merge with simmilar function in functions.js
-    if (this.direction === "north") {
+    if (this.direction.name === "north") {
       newCoordinates.y = this.position.y + 0.2;
-    } else if (this.direction === "east") {
+    } else if (this.direction.name === "east") {
       newCoordinates.x = this.position.x + 0.2;
-    } else if (this.direction === "south") {
+    } else if (this.direction.name === "south") {
       newCoordinates.y = this.position.y - 0.2;
-    } else if (this.direction === "west") {
+    } else if (this.direction.name === "west") {
       newCoordinates.x = this.position.x - 0.2;
     }
 
@@ -89,27 +92,57 @@ export default class Mouse {
   }
 
   turnLeft() {
-    if (this.direction === "north") {
-      this.direction = "west";
-    } else if (this.direction === "east") {
-      this.direction = "north";
-    } else if (this.direction === "south") {
-      this.direction = "east";
-    } else if (this.direction === "west") {
-      this.direction = "south";
+    if (this.direction.name === "north") {
+      this.direction.name = "west";
+    } else if (this.direction.name === "east") {
+      this.direction.name = "north";
+    } else if (this.direction.name === "south") {
+      this.direction.name = "east";
+    } else if (this.direction.name === "west") {
+      this.direction.name = "south";
     }
+
+    //prevents bug
+    if (this.direction.name === "west") {
+      this.direction.rotation = 360;
+    }
+
+    let newRotation = functions.translateDirectionIntoRotation(
+      this.direction.name
+    );
+
+    gsap.to(this.direction, {
+      rotation: newRotation,
+      duration: 1,
+      ease: "Power2.easeInOut",
+    });
   }
 
   turnRight() {
-    if (this.direction === "north") {
-      this.direction = "east";
-    } else if (this.direction === "east") {
-      this.direction = "south";
-    } else if (this.direction === "south") {
-      this.direction = "west";
-    } else if (this.direction === "west") {
-      this.direction = "north";
+    if (this.direction.name === "north") {
+      this.direction.name = "east";
+    } else if (this.direction.name === "east") {
+      this.direction.name = "south";
+    } else if (this.direction.name === "south") {
+      this.direction.name = "west";
+    } else if (this.direction.name === "west") {
+      this.direction.name = "north";
     }
+
+    //prevents bug
+    if (this.direction.name === "north") {
+      this.direction.rotation = -90;
+    }
+
+    let newRotation = functions.translateDirectionIntoRotation(
+      this.direction.name
+    );
+
+    gsap.to(this.direction, {
+      rotation: newRotation,
+      duration: 1,
+      ease: "Power2.easeInOut",
+    });
   }
 
   eatCheese() {
@@ -132,17 +165,7 @@ export default class Mouse {
       )[1]
     );
 
-    // let rotation = {};
-
-    if (this.direction === "north") {
-      rotate((PI / 180) * 0);
-    } else if (this.direction === "east") {
-      rotate((PI / 180) * 90);
-    } else if (this.direction === "south") {
-      rotate((PI / 180) * 180);
-    } else if (this.direction === "west") {
-      rotate((PI / 180) * 270);
-    }
+    rotate((PI / 180) * this.direction.rotation);
 
     imageMode(CENTER);
     scale(0.033);
