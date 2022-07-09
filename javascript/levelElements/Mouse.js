@@ -7,16 +7,17 @@ export default class Mouse {
     this.dizzyImg = dizzyImg;
     this.cheeseImg = cheeseImg;
     this.position = { x: 0, y: 0 };
-    this.direction = { name: "", rotation: 0 }; //first: name as on a map
-    // this.rotation;
+    this.direction = { name: "", rotation: 0 }; //direction.name as on a map
     this.isDizzy = false;
   }
 
   setUp(x, y, direction) {
     this.position = { x: x, y: y };
-    this.direction.name = direction;
-    this.direction.rotation =
-      functions.translateDirectionIntoRotation(direction);
+    this.direction = {
+      name: direction,
+      rotation: functions.translateDirectionIntoRotation(direction),
+    };
+    this.isDizzy = false;
   }
 
   moveStraight() {

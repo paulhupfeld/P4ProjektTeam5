@@ -32,7 +32,9 @@ export default class Navigator {
 
     //in translateIDIntoCommands
     //push functions into array
-    this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
+    // this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
+
+    this.commands = ["moveStraight", "turnLeft", "moveStraight"];
 
     this.navigateCommands();
   }
@@ -82,6 +84,16 @@ export default class Navigator {
       mouse.moveStraightAgaintBarrier();
       window.clearInterval(this.intervalID);
       console.log("loose");
+    }
+  }
+
+  reset() {
+    if (this.executing.boolean === false) {
+      this.setUpLevel = true;
+      this.commands = [];
+      this.executing = { boolean: false, command: "" };
+      this.levelSuccess = false;
+      this.levelFail = false;
     }
   }
 

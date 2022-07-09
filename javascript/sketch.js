@@ -14,7 +14,7 @@ function draw() {
 }
 
 function mouseClicked() {
-  // navigator.checkMouseClicks();
+  navigator.reset();
 }
 
 window.draw = draw;

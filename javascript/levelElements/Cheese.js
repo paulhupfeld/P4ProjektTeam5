@@ -10,6 +10,8 @@ export default class Cheese {
 
   setUp(x, y) {
     this.position = { x: x, y: y };
+    this.isEaten = false;
+    this.isInHand = false;
   }
 
   eat() {
