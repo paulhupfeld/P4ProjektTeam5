@@ -32,7 +32,7 @@ export default class Navigator {
 
     //in translateIDIntoCommands
     //push functions into array
-    this.commands = ["moveStaight", "turnLeft", "moveStaight", "eatCheese"];
+    this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
 
     this.navigateCommands();
   }
@@ -46,8 +46,8 @@ export default class Navigator {
       let currentCommand = self.commands[intervalCount];
       self.executing.command = currentCommand;
 
-      if (currentCommand === "moveStaight") {
-        self.moveStaightCommand();
+      if (currentCommand === "moveStraight") {
+        self.moveStraightCommand();
       } else if (currentCommand === "turnLeft") {
         mouse.turnLeft();
       } else if (currentCommand === "turnRight") {
@@ -71,10 +71,10 @@ export default class Navigator {
           }
         }, 2000);
       }
-    }, 4000); //Dauer pro Command
+    }, 2000); //Dauer pro Command
   }
 
-  moveStaightCommand() {
+  moveStraightCommand() {
     if (functions.checkIfStepIsPossible(mouse, this.currentLevel)) {
       mouse.moveStraight();
     } else {
