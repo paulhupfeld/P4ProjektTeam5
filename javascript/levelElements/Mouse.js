@@ -9,7 +9,6 @@ export default class Mouse {
     this.position = { x: 0, y: 0 };
     this.direction = ""; //diretions as on a map
     this.isDizzy = false;
-    this.hasCheeseInItsHand = false;
   }
 
   setUp(x, y, direction) {
@@ -42,16 +41,52 @@ export default class Mouse {
       newCoordinates.x === cheese.position.x &&
       newCoordinates.y === cheese.position.y
     ) {
-      let self = this;
       setTimeout(function () {
-        self.hasCheeseInItsHand = true;
         cheese.isInHand = true;
       }, 700);
       //ruckelt!!
+    } else {
+      cheese.isInHand = false;
     }
   }
 
-  moveStraightAgaintBarrier() {}
+  moveStraightAgaintBarrier() {
+    let newCoordinates = { x: this.position.x, y: this.position.y };
+    let oldCoordinates = { x: this.position.x, y: this.position.y };
+
+    //merge with simmilar function in functions.js
+    if (this.direction === "north") {
+      newCoordinates.y = this.position.y + 0.2;
+    } else if (this.direction === "east") {
+      newCoordinates.x = this.position.x + 0.2;
+    } else if (this.direction === "south") {
+      newCoordinates.y = this.position.y - 0.2;
+    } else if (this.direction === "west") {
+      newCoordinates.x = this.position.x - 0.2;
+    }
+
+    //animation forward
+    gsap.to(this.position, {
+      x: newCoordinates.x,
+      y: newCoordinates.y,
+      duration: 0.7,
+      ease: "Power4.easeInOut",
+    });
+
+    let self = this;
+
+    //animation backward
+    setTimeout(function () {
+      self.isDizzy = true;
+
+      gsap.to(self.position, {
+        x: oldCoordinates.x,
+        y: oldCoordinates.y,
+        duration: 1.2,
+        ease: "power2.out",
+      });
+    }, 650);
+  }
 
   turnLeft() {
     if (this.direction === "north") {
@@ -78,7 +113,7 @@ export default class Mouse {
   }
 
   eatCheese() {
-    if (this.hasCheeseInItsHand) {
+    if (cheese.isInHand) {
       cheese.eat();
     }
   }
@@ -114,7 +149,7 @@ export default class Mouse {
 
     if (this.isDizzy) {
       image(this.dizzyImg, 0, 0);
-    } else if (this.hasCheeseInItsHand) {
+    } else if (cheese.isInHand) {
       image(this.cheeseImg, 0, 0);
     } else {
       image(this.normalImg, 0, 0);

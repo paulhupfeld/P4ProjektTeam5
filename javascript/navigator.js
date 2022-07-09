@@ -34,7 +34,18 @@ export default class Navigator {
   navigateCommands() {
     //in translateIDIntoCommands
     //push functions into array
-    this.commands = ["moveStaight", "turnLeft", "moveStaight", "eatCheese"];
+    // this.commands = ["moveStaight", "turnLeft", "moveStaight", "eatCheese"];
+    this.commands = [
+      "moveStaight",
+      "turnLeft",
+      "moveStaight",
+      "turnRight",
+      "moveStaight",
+      "turnRight",
+      "turnRight",
+      "moveStaight",
+      "eatCheese",
+    ];
 
     let intervalCount = 0;
     let self = this;
@@ -65,7 +76,7 @@ export default class Navigator {
           }
         }, 2000);
       }
-    }, 1500);
+    }, 2000); //Dauer pro Command
   }
 
   moveStaightCommand() {
@@ -73,7 +84,7 @@ export default class Navigator {
       mouse.moveStraight();
     } else {
       this.levelFail = true;
-      // mouse.moveStraightAgaintBarrier();
+      mouse.moveStraightAgaintBarrier();
       window.clearInterval(this.intervalID);
       console.log("loose");
     }

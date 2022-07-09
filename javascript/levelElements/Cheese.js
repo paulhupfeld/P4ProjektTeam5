@@ -14,6 +14,7 @@ export default class Cheese {
 
   eat() {
     this.isEaten = true;
+    this.isInHand = false;
   }
 
   display() {
