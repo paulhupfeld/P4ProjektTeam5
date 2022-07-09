@@ -1,4 +1,4 @@
-import { displayLevel, mouse, cheese } from "../p5setup.js";
+import { labels, displayLevel, mouse, cheese } from "../p5setup.js";
 import * as functions from "./functions/functions.js";
 
 export default class Navigator {
@@ -8,7 +8,7 @@ export default class Navigator {
     this.currentLevel = 1;
     this.setUpLevel = true;
     this.commands = [];
-    this.executing = false;
+    this.executing = { boolean: false, command: "" };
     this.levelSuccess = false;
     this.levelFail = false;
   }
@@ -29,24 +29,30 @@ export default class Navigator {
     // const sendMessage = () => {
     //   this.send("Hello From Client1!");
     // };
-  }
 
-  navigateCommands() {
     //in translateIDIntoCommands
     //push functions into array
     this.commands = ["moveStaight", "turnLeft", "moveStaight", "eatCheese"];
 
+    this.navigateCommands();
+  }
+
+  navigateCommands() {
+    this.executing.boolean = true;
     let intervalCount = 0;
     let self = this;
 
     this.intervalID = setInterval(function () {
-      if (self.commands[intervalCount] === "moveStaight") {
+      let currentCommand = self.commands[intervalCount];
+      self.executing.command = currentCommand;
+
+      if (currentCommand === "moveStaight") {
         self.moveStaightCommand();
-      } else if (self.commands[intervalCount] === "turnLeft") {
+      } else if (currentCommand === "turnLeft") {
         mouse.turnLeft();
-      } else if (self.commands[intervalCount] === "turnRight") {
+      } else if (currentCommand === "turnRight") {
         mouse.turnRight();
-      } else if (self.commands[intervalCount] === "eatCheese") {
+      } else if (currentCommand === "eatCheese") {
         mouse.eatCheese();
       }
 
@@ -54,18 +60,18 @@ export default class Navigator {
         window.clearInterval(this.intervalID);
 
         setTimeout(function () {
-          self.hasCheeseInItsHand = true;
+          self.executing = { boolean: false, command: "" };
 
           if (cheese.isEaten) {
-            this.levelSuccess = true;
+            self.levelSuccess = true;
             console.log("win");
           } else {
-            this.levelFail = true;
+            self.levelFail = true;
             console.log("loose");
           }
         }, 2000);
       }
-    }, 2000); //Dauer pro Command
+    }, 4000); //Dauer pro Command
   }
 
   moveStaightCommand() {
@@ -86,12 +92,14 @@ export default class Navigator {
       displayLevel.setUpLevelElements(this.currentLevel);
 
       this.setUpLevel = false;
-
-      // this.moveStaightCommand();
-
-      this.navigateCommands();
     }
 
-    displayLevel.displayLevelElements(this.currentLevel);
+    displayLevel.display(this.currentLevel);
+    labels.display(
+      this.currentLevel,
+      this.executing,
+      this.levelSuccess,
+      this.levelFail
+    );
   }
 }

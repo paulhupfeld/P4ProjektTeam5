@@ -2,6 +2,7 @@ window.setup = setup;
 
 new p5();
 
+import Labels from "./javascript/Labels.js";
 import DisplayLevel from "./javascript/DisplayLevel.js";
 import Mouse from "./javascript/levelElements/Mouse.js";
 import Cheese from "./javascript/levelElements/Cheese.js";
@@ -11,7 +12,7 @@ export let mausylinth1,
   mouseDizzyImg,
   mouseWithCheeseImg,
   cheeseImg;
-export let displayLevel, mouse, cheese;
+export let displayLevel, labels, mouse, cheese;
 
 function preload() {
   mausylinth1 = loadImage("assets/mausylinth1.png");
@@ -25,6 +26,7 @@ function setup() {
   createCanvas(1280, 720);
   frameRate(30);
 
+  labels = new Labels();
   displayLevel = new DisplayLevel();
   mouse = new Mouse(mouseNormalImg, mouseDizzyImg, mouseWithCheeseImg);
   cheese = new Cheese(cheeseImg);

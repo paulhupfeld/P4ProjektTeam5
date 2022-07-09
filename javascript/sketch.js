@@ -13,4 +13,9 @@ function draw() {
   navigator.display();
 }
 
+function mouseClicked() {
+  // navigator.checkMouseClicks();
+}
+
 window.draw = draw;
+window.mouseClicked = mouseClicked;

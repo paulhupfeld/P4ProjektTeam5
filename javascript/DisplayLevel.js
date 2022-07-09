@@ -19,7 +19,7 @@ export default class DisplayLevel {
     cheese.setUp(cheesePosition.x, cheesePosition.y);
   }
 
-  displayLevelElements(currentLevel) {
+  display(currentLevel) {
     // let backgroundImg = new Image();
     // backgroundImg.src = "levelContent[currentLevel].background";
 
