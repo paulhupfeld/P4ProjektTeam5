@@ -34,7 +34,7 @@ export default class Navigator {
     //push functions into array
     // this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
 
-    this.commands = ["moveStraight", "turnLeft", "moveStraight"];
+    this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
 
     this.navigateCommands();
   }
@@ -59,10 +59,10 @@ export default class Navigator {
       }
 
       if (++intervalCount === self.commands.length) {
-        window.clearInterval(this.intervalID);
+        window.clearInterval(self.intervalID);
 
         setTimeout(function () {
-          self.executing = { boolean: false, command: "" };
+          self.executing.boolean = false;
 
           if (cheese.isEaten) {
             self.levelSuccess = true;
@@ -90,10 +90,13 @@ export default class Navigator {
   reset() {
     if (this.executing.boolean === false) {
       this.setUpLevel = true;
-      this.commands = [];
-      this.executing = { boolean: false, command: "" };
+      this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
+      this.executing.boolean = false;
       this.levelSuccess = false;
       this.levelFail = false;
+
+      //eig nicht hier hin
+      this.navigateCommands();
     }
   }
 

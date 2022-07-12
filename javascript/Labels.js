@@ -27,7 +27,8 @@ export default class Labels {
     } else if (levelFail) {
       textToLabel = "Error";
     } else {
-      textToLabel = "Drücke den Start-Knopf, um das Programm auszuführen";
+      textToLabel =
+        "Füge das Endstück hinzu und drücke den Start-Knopf, um das Programm auszuführen";
     }
 
     text(textToLabel, 655, 670);
