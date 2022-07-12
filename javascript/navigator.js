@@ -30,13 +30,15 @@ export default class Navigator {
     //   this.send("Hello From Client1!");
     // };
 
+    //wenn startsignal erhalten:
+
     //in translateIDIntoCommands
     //push functions into array
     // this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
 
     this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
 
-    this.navigateCommands();
+    // this.navigateCommands();
   }
 
   navigateCommands() {
@@ -44,25 +46,22 @@ export default class Navigator {
     let intervalCount = 0;
     let self = this;
 
+    //Interval muss am Anfang einmal ausgeführt werden, deswegen werden die ersten 4 sek programm startet angezeigt
+
     this.intervalID = setInterval(function () {
       let currentCommand = self.commands[intervalCount];
       self.executing.command = currentCommand;
 
-      if (currentCommand === "moveStraight") {
-        self.moveStraightCommand();
-      } else if (currentCommand === "turnLeft") {
-        mouse.turnLeft();
-      } else if (currentCommand === "turnRight") {
-        mouse.turnRight();
-      } else if (currentCommand === "eatCheese") {
-        mouse.eatCheese();
-      }
+      setTimeout(function () {
+        self.executeCurrentCommand(currentCommand);
+      }, 1600); //Time until mouse moves
 
+      //Am Ende:
       if (++intervalCount === self.commands.length) {
         window.clearInterval(self.intervalID);
 
         setTimeout(function () {
-          self.executing.boolean = false;
+          self.executing = { boolean: false, command: "" };
 
           if (cheese.isEaten) {
             self.levelSuccess = true;
@@ -73,7 +72,21 @@ export default class Navigator {
           }
         }, 2000);
       }
-    }, 2000); //Dauer pro Command
+    }, 4000); //Time per Command
+  }
+
+  executeCurrentCommand(currentCommand) {
+    console.log(currentCommand);
+
+    if (currentCommand === "moveStraight") {
+      this.moveStraightCommand();
+    } else if (currentCommand === "turnLeft") {
+      mouse.turnLeft();
+    } else if (currentCommand === "turnRight") {
+      mouse.turnRight();
+    } else if (currentCommand === "eatCheese") {
+      mouse.eatCheese();
+    }
   }
 
   moveStraightCommand() {
@@ -94,9 +107,6 @@ export default class Navigator {
       this.executing.boolean = false;
       this.levelSuccess = false;
       this.levelFail = false;
-
-      //eig nicht hier hin
-      this.navigateCommands();
     }
   }
 

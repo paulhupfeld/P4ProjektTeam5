@@ -14,7 +14,13 @@ function draw() {
 }
 
 function mouseClicked() {
+  //automatisch nach 10sek win/loose screen
   navigator.reset();
+
+  //eigentlich beim drücken des startknopfs
+  navigator.navigateCommands();
+
+  //theoretisch nötig zur Levelauswahl
 }
 
 window.draw = draw;
