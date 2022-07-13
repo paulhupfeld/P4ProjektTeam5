@@ -1,4 +1,5 @@
 import { levelContent } from "../../assets/levelContent.js";
+import { commandTranslations } from "../../assets/commandTranslations.js";
 
 export function translateIDIntoCommands() {}
 
@@ -64,4 +65,25 @@ export function checkIfStepIsPossible(mouse, currentLevel) {
   if (nextStepIsPossible) {
     return true;
   }
+}
+
+export function returnTranslation(language) {
+  // commandTranslations.map((language) => {
+  //   if (language === language) {
+  //     console.log(language);
+  //   }
+  // });
+  // commandTranslations[currentLevel].fields.map((field) => {
+  //   if (field.x === newPosition.x && field.y === newPosition.y) {
+  //     nextStepIsPossible = true;
+  //   }
+  // });
+  // console.log(commandTranslations.language.find((e) => e == "german"));
+  // if (this.language != "english") {
+  //   commandTranslations[this.language].fields.map((field) => {
+  //     if (field.x === newPosition.x && field.y === newPosition.y) {
+  //       nextStepIsPossible = true;
+  //     }
+  //   });
+  // }
 }

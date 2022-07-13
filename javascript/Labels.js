@@ -1,27 +1,33 @@
+import { commandTranslations } from "../../assets/commandTranslations.js";
+
 export default class Labels {
-  constructor() {}
+  constructor() {
+    this.language = "german";
+  }
 
   labelCurrentLevelNumber(currentLevel) {
     textSize(40);
 
-    text("Level " + currentLevel, 655, 60);
+    text("Level " + currentLevel, 640, 57);
   }
 
   labelLevelSelector(currentLevel) {
     textSize(17);
 
-    text("Levelauswahl", 285, 60);
+    //import translation from translations.js
+    text("Levelauswahl", 285, 62);
   }
 
   labelCurrentCommand(executing, levelSuccess, levelFail) {
-    textSize(20);
+    textSize(18);
 
     let textToLabel;
 
+    //import translations from translations.js
     if (executing.boolean && executing.command === "") {
       textToLabel = "Programm startet...";
     } else if (executing.boolean) {
-      textToLabel = "Führt aus: " + executing.command;
+      textToLabel = "Führt aus: " + executing.command; //!!!
     } else if (levelSuccess) {
       textToLabel = "GESCHAFFT!";
     } else if (levelFail) {
@@ -31,12 +37,13 @@ export default class Labels {
         "Füge das Endstück hinzu und drücke den Start-Knopf, um das Programm auszuführen";
     }
 
-    text(textToLabel, 655, 670);
+    text(textToLabel, 640, 665);
   }
 
   labelExecutionFeedback(levelSuccess, levelFail) {
     textSize(100);
 
+    //import translations from translation.js
     if (levelSuccess) {
       text("GESCHAFFT!", 655, 300);
     } else if (levelFail) {
@@ -48,7 +55,6 @@ export default class Labels {
     push();
 
     textAlign(CENTER, CENTER);
-    // textFont("Cascadia Mono PL");
     fill(0, 0, 0);
 
     this.labelCurrentLevelNumber(currentLevel);
