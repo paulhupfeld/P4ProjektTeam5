@@ -21,9 +21,7 @@ export default class DisplayLevel {
   display(currentLevel, levelSuccess, levelFail) {
     // let backgroundImg = new Image();
     // backgroundImg.src = "levelContent[currentLevel].background";
-
     // let backgroundImg = levelContent[currentLevel].background;
-
     // console.log(backgroundImg); //ncaught TypeError: CanvasRenderingContext2D.drawImage: Argument 1 could not be converted to any of
 
     push();

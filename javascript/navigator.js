@@ -97,16 +97,20 @@ export default class Navigator {
     }
   }
 
-  reset() {
+  reset(nextLevel) {
     if (this.executing.boolean === false) {
       this.setUpLevel = true;
-      this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"]; //hier weg
       this.executing.boolean = false;
       this.levelSuccess = false;
       this.levelFail = false;
 
-      //this.commands =
+      if (nextLevel) {
+        this.currentLevel++;
+      }
+
       //add new commands
+      //this.commands =
+      this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"]; //hier weg
     }
   }
 

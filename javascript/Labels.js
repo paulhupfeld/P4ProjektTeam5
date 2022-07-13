@@ -1,7 +1,10 @@
 import { commandTranslations } from "../../assets/commandTranslations.js";
+import { winScreenImg, looseScreenImg } from "../p5setup.js";
 
 export default class Labels {
-  constructor() {
+  constructor(winScreen, looseScreen) {
+    this.winScreenImg = winScreenImg;
+    this.looseScreenImg = looseScreenImg;
     this.language = "german";
   }
 
@@ -43,12 +46,20 @@ export default class Labels {
   labelExecutionFeedback(levelSuccess, levelFail) {
     textSize(100);
 
-    //import translations from translation.js
+    push();
+    imageMode(CENTER, CENTER);
+
     if (levelSuccess) {
-      text("GESCHAFFT!", 655, 300);
+      translate(655, 325);
+      scale(0.2);
+      image(this.winScreenImg, 0, 0);
     } else if (levelFail) {
-      text("Error", 655, 300);
+      translate(640, 330);
+      scale(0.23);
+      image(this.looseScreenImg, 0, 0);
     }
+
+    pop();
   }
 
   display(currentLevel, executing, levelSuccess, levelFail) {

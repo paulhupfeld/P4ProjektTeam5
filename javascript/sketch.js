@@ -14,11 +14,30 @@ function draw() {
 
 //theoretisch nötig zur Levelauswahl
 function mouseClicked() {
-  //automatisch nach 10sek win/loose screen
-  navigator.reset();
-
   //eigentlich beim drücken des startknopfs
-  navigator.navigateCommands();
+  if (navigator.levelSuccess === false && navigator.levelFail === false) {
+    navigator.navigateCommands();
+  }
+
+  if (
+    navigator.levelSuccess &&
+    mouseX >= 572 &&
+    mouseX <= 622 &&
+    mouseY >= 491 &&
+    mouseY <= 541
+  ) {
+    navigator.reset();
+  }
+
+  if (
+    navigator.levelFail &&
+    mouseX >= 615 &&
+    mouseX <= 665 &&
+    mouseY >= 485 &&
+    mouseY <= 535
+  ) {
+    navigator.reset();
+  }
 }
 
 window.draw = draw;
