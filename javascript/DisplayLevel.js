@@ -1,5 +1,4 @@
 import { levelContent } from "../../assets/levelContent.js";
-
 import { mausylinth1 } from "../p5setup.js";
 import { mouse, cheese } from "../p5setup.js";
 
@@ -19,7 +18,7 @@ export default class DisplayLevel {
     cheese.setUp(cheesePosition.x, cheesePosition.y);
   }
 
-  display(currentLevel) {
+  display(currentLevel, levelSuccess, levelFail) {
     // let backgroundImg = new Image();
     // backgroundImg.src = "levelContent[currentLevel].background";
 
@@ -34,5 +33,9 @@ export default class DisplayLevel {
 
     cheese.display();
     mouse.display();
+
+    if (levelSuccess || levelFail) {
+      filter(BLUR, 3);
+    }
   }
 }

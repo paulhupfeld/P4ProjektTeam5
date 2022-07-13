@@ -7,7 +7,8 @@ import DisplayLevel from "./javascript/DisplayLevel.js";
 import Mouse from "./javascript/levelElements/Mouse.js";
 import Cheese from "./javascript/levelElements/Cheese.js";
 
-export let mausylinth1,
+export let CascadiaMonoPL,
+  mausylinth1,
   mouseNormalImg,
   mouseDizzyImg,
   mouseWithCheeseImg,
@@ -15,6 +16,7 @@ export let mausylinth1,
 export let displayLevel, labels, mouse, cheese;
 
 function preload() {
+  CascadiaMonoPL = loadFont("assets/CascadiaMonoPL-ExtraLight.otf");
   mausylinth1 = loadImage("assets/mausylinth1.png");
   mouseNormalImg = loadImage("assets/mouseNormalImg.png");
   mouseDizzyImg = loadImage("assets/mouseDizzyImg.png");
@@ -25,6 +27,8 @@ function preload() {
 function setup() {
   createCanvas(1280, 720);
   frameRate(30);
+
+  textFont(CascadiaMonoPL);
 
   labels = new Labels();
   displayLevel = new DisplayLevel();

@@ -48,7 +48,7 @@ export default class Labels {
     push();
 
     textAlign(CENTER, CENTER);
-    textFont("Georgia");
+    // textFont("Cascadia Mono PL");
     fill(0, 0, 0);
 
     this.labelCurrentLevelNumber(currentLevel);

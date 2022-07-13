@@ -34,7 +34,6 @@ export default class Navigator {
 
     //in translateIDIntoCommands
     //push functions into array
-    // this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
 
     this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
 
@@ -76,8 +75,6 @@ export default class Navigator {
   }
 
   executeCurrentCommand(currentCommand) {
-    console.log(currentCommand);
-
     if (currentCommand === "moveStraight") {
       this.moveStraightCommand();
     } else if (currentCommand === "turnLeft") {
@@ -103,10 +100,13 @@ export default class Navigator {
   reset() {
     if (this.executing.boolean === false) {
       this.setUpLevel = true;
-      this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
+      this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"]; //hier weg
       this.executing.boolean = false;
       this.levelSuccess = false;
       this.levelFail = false;
+
+      //this.commands =
+      //add new commands
     }
   }
 
@@ -119,7 +119,7 @@ export default class Navigator {
       this.setUpLevel = false;
     }
 
-    displayLevel.display(this.currentLevel);
+    displayLevel.display(this.currentLevel, this.levelSuccess, this.levelFail);
     labels.display(
       this.currentLevel,
       this.executing,
