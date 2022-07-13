@@ -6,6 +6,10 @@ export default class Labels {
     this.winScreenImg = winScreenImg;
     this.looseScreenImg = looseScreenImg;
     this.language = "german";
+    this.animateExecutionFeedback = false;
+    this.img;
+    this.imgPosition = { x: 650, y: 325, scale: 0.01 };
+    this.newImgPosition;
   }
 
   labelCurrentLevelNumber(currentLevel) {
@@ -44,22 +48,34 @@ export default class Labels {
   }
 
   labelExecutionFeedback(levelSuccess, levelFail) {
-    textSize(100);
+    if (this.animateExecutionFeedback) {
+      if (levelSuccess) {
+        this.img = this.winScreenImg;
+        this.newImgPosition = { x: 655, y: 325, scale: 0.2 };
+      } else if (levelFail) {
+        this.img = this.looseScreenImg;
+        this.newImgPosition = { x: 640, y: 330, scale: 0.23 };
+      }
+
+      gsap.to(this.imgPosition, {
+        x: this.newImgPosition.x,
+        y: this.newImgPosition.y,
+        scale: this.newImgPosition.scale,
+        duration: 1,
+        ease: "easeOut.config( 1, 0.3)",
+      });
+    }
 
     push();
     imageMode(CENTER, CENTER);
 
-    if (levelSuccess) {
-      translate(655, 325);
-      scale(0.2);
-      image(this.winScreenImg, 0, 0);
-    } else if (levelFail) {
-      translate(640, 330);
-      scale(0.23);
-      image(this.looseScreenImg, 0, 0);
-    }
+    translate(this.imgPosition.x, this.imgPosition.y);
+    scale(this.imgPosition.scale);
+    image(this.img, 0, 0);
 
     pop();
+
+    this.animateExecutionFeedback = false;
   }
 
   display(currentLevel, executing, levelSuccess, levelFail) {
@@ -71,7 +87,10 @@ export default class Labels {
     this.labelCurrentLevelNumber(currentLevel);
     this.labelLevelSelector(currentLevel);
     this.labelCurrentCommand(executing, levelSuccess, levelFail);
-    this.labelExecutionFeedback(levelSuccess, levelFail);
+
+    if (levelSuccess || levelFail) {
+      this.labelExecutionFeedback(levelSuccess, levelFail);
+    }
 
     pop();
   }

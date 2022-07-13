@@ -1,5 +1,6 @@
 import { labels, displayLevel, mouse, cheese } from "../p5setup.js";
 import * as functions from "./functions/functions.js";
+import Labels from "./Labels.js";
 
 export default class Navigator {
   constructor(socket) {
@@ -65,9 +66,13 @@ export default class Navigator {
           if (cheese.isEaten) {
             self.levelSuccess = true;
             console.log("win");
+
+            labels.animateExecutionFeedback = true;
           } else {
             self.levelFail = true;
             console.log("loose");
+
+            labels.animateExecutionFeedback = true;
           }
         }, 2000);
       }
@@ -103,6 +108,7 @@ export default class Navigator {
       this.executing.boolean = false;
       this.levelSuccess = false;
       this.levelFail = false;
+      this.imgPosition = { x: 650, y: 325, scale: 0.01 };
 
       if (nextLevel) {
         this.currentLevel++;
