@@ -48,7 +48,7 @@ export default class Navigator {
 
     //Interval muss am Anfang einmal ausgeführt werden, deswegen werden die ersten 4 sek programm startet angezeigt
 
-    this.intervalID = setInterval(function () {
+    function myInterval() {
       let currentCommand = self.commands[intervalCount];
       self.executing.command = currentCommand;
 
@@ -76,7 +76,10 @@ export default class Navigator {
           }
         }, 2000);
       }
-    }, 4000); //Time per Command
+    }
+
+    this.intervalID = setInterval(myInterval, 4000); //Time per Command
+    myInterval();
   }
 
   executeCurrentCommand(currentCommand) {
@@ -108,7 +111,7 @@ export default class Navigator {
       this.executing.boolean = false;
       this.levelSuccess = false;
       this.levelFail = false;
-      this.imgPosition = { x: 650, y: 325, scale: 0.01 };
+      labels.imgPosition = { x: 650, y: 325, scale: 0.01 };
 
       if (nextLevel) {
         this.currentLevel++;

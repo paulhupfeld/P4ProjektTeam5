@@ -32,8 +32,9 @@ export default class DisplayLevel {
     cheese.display();
     mouse.display();
 
-    if (levelSuccess || levelFail) {
-      filter(BLUR, 3);
-    }
+    //zu rechenintensiv:
+    // if (levelSuccess || levelFail) {
+    //   filter(BLUR, 3);
+    // }
   }
 }
