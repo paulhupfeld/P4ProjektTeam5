@@ -1,5 +1,5 @@
-import { commandTranslations } from "../../assets/commandTranslations.js";
 import { winScreenImg, looseScreenImg } from "../p5setup.js";
+import * as functions from "./functions/functions.js";
 
 export default class Labels {
   constructor(winScreen, looseScreen) {
@@ -30,11 +30,11 @@ export default class Labels {
 
     let textToLabel;
 
-    //import translations from translations.js
     if (executing.boolean && executing.command === "") {
       textToLabel = "Programm startet...";
     } else if (executing.boolean) {
-      textToLabel = "Führt aus: " + executing.command; //!!!
+      textToLabel =
+        "Führt aus: " + functions.returnTranslation(executing.command); //!!!
     } else if (levelSuccess) {
       textToLabel = "GESCHAFFT!";
     } else if (levelFail) {

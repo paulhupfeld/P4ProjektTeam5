@@ -1,5 +1,4 @@
 import { levelContent } from "../../assets/levelContent.js";
-import { commandTranslations } from "../../assets/commandTranslations.js";
 
 export function translateIDIntoCommands() {}
 
@@ -67,23 +66,19 @@ export function checkIfStepIsPossible(mouse, currentLevel) {
   }
 }
 
-export function returnTranslation(language) {
-  // commandTranslations.map((language) => {
-  //   if (language === language) {
-  //     console.log(language);
-  //   }
-  // });
-  // commandTranslations[currentLevel].fields.map((field) => {
-  //   if (field.x === newPosition.x && field.y === newPosition.y) {
-  //     nextStepIsPossible = true;
-  //   }
-  // });
-  // console.log(commandTranslations.language.find((e) => e == "german"));
-  // if (this.language != "english") {
-  //   commandTranslations[this.language].fields.map((field) => {
-  //     if (field.x === newPosition.x && field.y === newPosition.y) {
-  //       nextStepIsPossible = true;
-  //     }
-  //   });
-  // }
+export function returnTranslation(wordToTranslate) {
+  //import translations from own file (translations.js)
+  let translatedWord;
+
+  if (wordToTranslate === "moveStraight") {
+    translatedWord = "vorwärtsGehen";
+  } else if (wordToTranslate === "turnLeft") {
+    translatedWord = "linksDrehen";
+  } else if (wordToTranslate === "turnRight") {
+    translatedWord = "rechtsDrehen";
+  } else if (wordToTranslate === "eatCheese") {
+    translatedWord = "käseEssen";
+  }
+
+  return translatedWord;
 }

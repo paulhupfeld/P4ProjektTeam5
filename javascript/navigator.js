@@ -1,6 +1,5 @@
 import { labels, displayLevel, mouse, cheese } from "../p5setup.js";
 import * as functions from "./functions/functions.js";
-import Labels from "./Labels.js";
 
 export default class Navigator {
   constructor(socket) {
