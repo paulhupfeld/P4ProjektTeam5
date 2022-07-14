@@ -61,7 +61,7 @@ export default class Labels {
         x: this.newImgPosition.x,
         y: this.newImgPosition.y,
         scale: this.newImgPosition.scale,
-        duration: 1,
+        duration: 0.5,
         ease: "easeOut.config( 1, 0.3)",
       });
     }

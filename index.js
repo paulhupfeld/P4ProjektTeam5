@@ -17,3 +17,13 @@ wss.on("connection", (ws) => {
 // app.get("/", (req, res) => res.send("Hello World!"));
 
 server.listen(3000, () => console.log(`Listening on port: 3000`));
+
+// const { Board, Led } = require("johnny-five");
+// const board = new Board();
+
+// board.on("ready", () => {
+//   // Create an Led on pin 13
+//   const led = new Led(13);
+//   // Blink every half second
+//   led.blink(500);
+// });
