@@ -13,7 +13,7 @@ export default class Navigator {
     this.levelFail = false;
   }
 
-  wsCommunicator() {
+  wsListenForSignal() {
     // Connection opened
     this.socket.addEventListener("open", function (event) {
       this.send("Hello From Client1!");
@@ -34,12 +34,14 @@ export default class Navigator {
       // this.reset(); setze Level zurück
     });
 
+    this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
+  }
+
+  wsSendSignal(id, color) {
     // // Send a message
     // const sendMessage = () => {
     //   this.send("Hello From Client1!");
     // };
-
-    this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
   }
 
   navigateCommands() {
@@ -51,9 +53,8 @@ export default class Navigator {
       let currentCommand = self.commands[intervalCount];
       self.executing.command = currentCommand;
 
-      // Sende Signal mit ID & Rot/Grün über wsSendSignal an Microcontroller - schwierig, da erst in this.moveStraightCommand() und mit delay gecheckt wird ob schritt möglich
-      // wsCommunicator in wsListenForSignal & wsSendSignal teilen
-      // commands-array mit objekten füllen: name: ..., id: ... & und überall commands[x].name abfragen
+      // Sende Signal mit ID & Rot/Grün über wsSendSignal() an Microcontroller - schwierig, da erst in this.moveStraightCommand() und mit delay gecheckt wird ob schritt möglich
+      // commands-array mit objekten füllen: name: ..., id: ... & und überall commands[x].name abfragen //push as functions not as strings
 
       setTimeout(function () {
         self.executeCurrentCommand(currentCommand);

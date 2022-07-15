@@ -6,7 +6,7 @@ const socket = new WebSocket("ws://localhost:3000");
 export let navigator;
 navigator = new Navigator(socket);
 
-navigator.wsCommunicator();
+navigator.wsListenForSignal();
 
 function draw() {
   navigator.display();
