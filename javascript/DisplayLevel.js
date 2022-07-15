@@ -19,10 +19,7 @@ export default class DisplayLevel {
   }
 
   display(currentLevel, levelSuccess, levelFail) {
-    // let backgroundImg = new Image();
-    // backgroundImg.src = "levelContent[currentLevel].background";
-    // let backgroundImg = levelContent[currentLevel].background;
-    // console.log(backgroundImg); //ncaught TypeError: CanvasRenderingContext2D.drawImage: Argument 1 could not be converted to any of
+    // check levelContent.js for backgroundImg
 
     push();
     translate(0, 15);
@@ -31,10 +28,5 @@ export default class DisplayLevel {
 
     cheese.display();
     mouse.display();
-
-    //zu rechenintensiv:
-    // if (levelSuccess || levelFail) {
-    //   filter(BLUR, 3);
-    // }
   }
 }

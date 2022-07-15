@@ -21,7 +21,6 @@ export default class Labels {
   labelLevelSelector(currentLevel) {
     textSize(17);
 
-    //import translation from translations.js
     text("Levelauswahl", 285, 62);
   }
 
@@ -34,7 +33,7 @@ export default class Labels {
       textToLabel = "Programm startet...";
     } else if (executing.boolean) {
       textToLabel =
-        "Führt aus: " + functions.returnTranslation(executing.command); //!!!
+        "Führt aus: " + functions.returnTranslation(executing.command);
     } else if (levelSuccess) {
       textToLabel = "GESCHAFFT!";
     } else if (levelFail) {

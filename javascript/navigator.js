@@ -51,11 +51,13 @@ export default class Navigator {
       let currentCommand = self.commands[intervalCount];
       self.executing.command = currentCommand;
 
+      // Sende Signal mit ID & Rot/Grün über wsSendSignal an Microcontroller - schwierig, da erst in this.moveStraightCommand() und mit delay gecheckt wird ob schritt möglich
+      // wsCommunicator in wsListenForSignal & wsSendSignal teilen
+      // commands-array mit objekten füllen: name: ..., id: ... & und überall commands[x].name abfragen
+
       setTimeout(function () {
         self.executeCurrentCommand(currentCommand);
       }, 1500); //Time until mouse moves
-
-      console.log("interval");
 
       //After all commands were executed:
       if (++intervalCount === self.commands.length) {
@@ -113,8 +115,6 @@ export default class Navigator {
       this.levelSuccess = false;
       this.levelFail = false;
       labels.imgPosition = { x: 650, y: 325, scale: 0.01 };
-      // window.clearInterval(this.intervalID);
-      // console.log("reset");
 
       if (nextLevel) {
         this.currentLevel++;

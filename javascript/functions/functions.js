@@ -11,10 +11,6 @@ export function translateFieldNumberIntoCoordinates(fieldX, fieldY) {
 
   let YToReturn = centerOfField11[1] - distanceToNextField[1] * (fieldY - 1);
 
-  // console.log(XToReturn + ", " + YToReturn);
-  // let coordinatesToReturn = XToReturn + ", " + YToReturn;
-  // return coordinatesToReturn;
-
   return [XToReturn, YToReturn];
 }
 
@@ -38,7 +34,7 @@ export function checkIfStepIsPossible(mouse, currentLevel) {
   let newCoordinate;
   let newPosition;
 
-  //merge with simmilar function in Mouse.js
+  //merge with similar function in Mouse.js
   if (mouse.direction.name === "north") {
     newCoordinate = mouse.position.y + 1;
     newPosition = { x: mouse.position.x, y: newCoordinate };

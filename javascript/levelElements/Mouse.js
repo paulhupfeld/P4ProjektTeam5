@@ -23,7 +23,7 @@ export default class Mouse {
   moveStraight() {
     let newCoordinates = { x: this.position.x, y: this.position.y };
 
-    //merge with simmilar function in functions.js
+    //merge with similar function in functions.js
     if (this.direction.name === "north") {
       newCoordinates.y = this.position.y + 1;
     } else if (this.direction.name === "east") {
@@ -48,7 +48,6 @@ export default class Mouse {
       setTimeout(function () {
         cheese.isInHand = true;
       }, 700);
-      //ruckelt!!
     } else {
       cheese.isInHand = false;
     }
@@ -58,7 +57,7 @@ export default class Mouse {
     let newCoordinates = { x: this.position.x, y: this.position.y };
     let oldCoordinates = { x: this.position.x, y: this.position.y };
 
-    //merge with simmilar function in functions.js
+    //merge with similar function in functions.js
     if (this.direction.name === "north") {
       newCoordinates.y = this.position.y + 0.2;
     } else if (this.direction.name === "east") {

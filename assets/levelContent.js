@@ -2,7 +2,6 @@ export const levelContent = [
   { level: "placeholder" },
   {
     level: 1,
-    background: "mausylinth1",
     mouseStartPosition: { x: 2, y: 1 },
     mouseStartDirection: "north",
     cheesePosition: { x: 1, y: 2 },
@@ -18,5 +17,8 @@ export const levelContent = [
       { x: 4, y: 1 },
       { x: 4, y: 3 },
     ],
+    background: "mausylinth1",
+    centerOfField11: { x: 448.5, y: 536 },
+    distanceToNextField: { x: 137, y: 132 },
   },
 ];
