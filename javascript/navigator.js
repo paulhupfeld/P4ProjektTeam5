@@ -23,6 +23,15 @@ export default class Navigator {
     // Listen for messages
     this.socket.addEventListener("message", function (event) {
       console.log("Received message =>", event.data);
+
+      //bei Empfangen von START-SIGNAL + Array mit IDs:
+      //IDS mit translateIDIntoCommands übersetzen
+      //commands in array pushen
+      //this.navigateCommands(); function wird gerade in sketch.js -> mouseClick ausgeführt
+
+      //bei Empfangen von STOP-SIGNAL:
+      //zeige Error-Nachricht +
+      // this.reset(); setze Level zurück
     });
 
     // // Send a message
@@ -30,14 +39,7 @@ export default class Navigator {
     //   this.send("Hello From Client1!");
     // };
 
-    //wenn startsignal erhalten:
-
-    //in translateIDIntoCommands
-    //push functions into array
-
     this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
-
-    // this.navigateCommands();
   }
 
   navigateCommands() {
@@ -45,17 +47,17 @@ export default class Navigator {
     let intervalCount = 0;
     let self = this;
 
-    //Interval muss am Anfang einmal ausgeführt werden, deswegen werden die ersten 4 sek programm startet angezeigt
-
     function myInterval() {
       let currentCommand = self.commands[intervalCount];
       self.executing.command = currentCommand;
 
       setTimeout(function () {
         self.executeCurrentCommand(currentCommand);
-      }, 1600); //Time until mouse moves
+      }, 1500); //Time until mouse moves
 
-      //Am Ende:
+      console.log("interval");
+
+      //After all commands were executed:
       if (++intervalCount === self.commands.length) {
         window.clearInterval(self.intervalID);
 
@@ -111,13 +113,14 @@ export default class Navigator {
       this.levelSuccess = false;
       this.levelFail = false;
       labels.imgPosition = { x: 650, y: 325, scale: 0.01 };
+      // window.clearInterval(this.intervalID);
+      // console.log("reset");
 
       if (nextLevel) {
         this.currentLevel++;
       }
 
-      //add new commands
-      //this.commands =
+      //wird normalerweise durch durch wsNavigator gesetzt
       this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"]; //hier weg
     }
   }

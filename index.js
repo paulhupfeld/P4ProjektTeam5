@@ -16,14 +16,13 @@ wss.on("connection", (ws) => {
 
 // app.get("/", (req, res) => res.send("Hello World!"));
 
-server.listen(3000, () => console.log(`Listening on port: 3000`));
+// server.listen(3000, () => console.log(`Listening on port: 3000`));
 
-// const { Board, Led } = require("johnny-five");
-// const board = new Board();
+//bei Start-Signal von Start-Button: setzte let start = true
+//sobald start === true: frage IDs ab + setze start = false
+//bei Antwort(en) der Microcontroller: speichere IDs in richtiger Reihenfolge in Array ab
+//sobald alle Antworten erhalten: sende Start-Signal + Array an JS
 
-// board.on("ready", () => {
-//   // Create an Led on pin 13
-//   const led = new Led(13);
-//   // Blink every half second
-//   led.blink(500);
-// });
+//bei Leuchte-Befehl von J5: Sende Befehl leuchte grün/rot an Microcontroller mit genannter ID
+
+//sobald Verbindung zu Arduino abbricht: Sende STOP-Signal an JS

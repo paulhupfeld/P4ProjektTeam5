@@ -12,9 +12,13 @@ function draw() {
   navigator.display();
 }
 
-//theoretisch nötig zur Levelauswahl
 function mouseClicked() {
   //eigentlich beim drücken des startknopfs
+
+  // if (navigator.executing.boolean) {
+  //   navigator.reset();
+  // }
+
   if (navigator.levelSuccess === false && navigator.levelFail === false) {
     navigator.navigateCommands();
   }
