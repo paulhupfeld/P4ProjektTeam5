@@ -5,11 +5,11 @@ export default class Labels {
   constructor(winScreen, looseScreen) {
     this.winScreenImg = winScreenImg;
     this.looseScreenImg = looseScreenImg;
-    this.language = "german";
-    this.animateExecutionFeedback = false;
     this.img;
     this.imgPosition = { x: 650, y: 325, scale: 0.01 };
     this.newImgPosition;
+    this.language = "german";
+    this.animateExecutionFeedback = false;
   }
 
   labelCurrentLevelNumber(currentLevel) {

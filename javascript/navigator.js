@@ -34,6 +34,7 @@ export default class Navigator {
       // this.reset(); setze Level zurück
     });
 
+    console.log("setcommands");
     this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
   }
 
@@ -52,6 +53,8 @@ export default class Navigator {
     function myInterval() {
       let currentCommand = self.commands[intervalCount];
       self.executing.command = currentCommand;
+
+      console.log("interval");
 
       // Sende Signal mit ID & Rot/Grün über wsSendSignal() an Microcontroller - schwierig, da erst in this.moveStraightCommand() und mit delay gecheckt wird ob schritt möglich
       // commands-array mit objekten füllen: name: ..., id: ... & und überall commands[x].name abfragen //push as functions not as strings
@@ -110,20 +113,21 @@ export default class Navigator {
   }
 
   reset(nextLevel) {
-    if (this.executing.boolean === false) {
-      this.setUpLevel = true;
-      this.executing.boolean = false;
-      this.levelSuccess = false;
-      this.levelFail = false;
-      labels.imgPosition = { x: 650, y: 325, scale: 0.01 };
+    // if (this.executing.boolean === false) {
+    this.setUpLevel = true;
+    this.executing.boolean = false;
+    this.levelSuccess = false;
+    this.levelFail = false;
+    labels.imgPosition = { x: 650, y: 325, scale: 0.01 };
+    clearInterval(this.intervalID);
 
-      if (nextLevel) {
-        this.currentLevel++;
-      }
-
-      //wird normalerweise durch durch wsNavigator gesetzt
-      this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"]; //hier weg
+    if (nextLevel) {
+      this.currentLevel++;
     }
+
+    //wird normalerweise durch durch wsNavigator gesetzt
+    this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"]; //hier weg
+    // }
   }
 
   display() {
