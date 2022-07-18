@@ -3,12 +3,23 @@ const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
 const WebSocket = require("ws");
-
 const wss = new WebSocket.Server({ server: server });
+
+let commands = JSON.stringify([
+  "moveStraight",
+  "turnLeft",
+  "moveStraight",
+  "eatCheese",
+]);
 
 wss.on("connection", (ws) => {
   console.log("A new client connected");
-  ws.send("hello new client");
+
+  // ws.send("hellow new client");
+
+  setTimeout(function () {
+    ws.send(commands);
+  }, 1500);
 
   ws.on("message", (message) => {
     console.log(`Received message => ${message}`);

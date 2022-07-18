@@ -14,15 +14,23 @@ export default class Navigator {
   }
 
   wsListenForSignal() {
+    let self = this;
+
     // Connection opened
     this.socket.addEventListener("open", function (event) {
-      this.send("Hello From Client1!");
+      this.send("Hello From Client");
       console.log("Connected to WS Server");
     });
 
     // Listen for messages
     this.socket.addEventListener("message", function (event) {
-      console.log("Received message =>", event.data);
+      let receivedMessage = JSON.parse(event.data);
+
+      self.commands = receivedMessage;
+
+      self.navigateCommands();
+
+      console.log("Received message =>", receivedMessage);
     });
 
     //bei Empfangen von START-SIGNAL + Array mit IDs:
@@ -34,7 +42,7 @@ export default class Navigator {
     //zeige Error-Nachricht +
     // this.reset(); setze Level zurück
 
-    this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
+    // this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
   }
 
   wsSendSignal(id, color) {
@@ -45,6 +53,7 @@ export default class Navigator {
   }
 
   navigateCommands() {
+    console.log("navigateCommands");
     this.executing.boolean = true;
     let intervalCount = 0;
     let self = this;
@@ -52,8 +61,6 @@ export default class Navigator {
     function myInterval() {
       let currentCommand = self.commands[intervalCount];
       self.executing.command = currentCommand;
-
-      console.log("interval");
 
       // Sende Signal mit ID & Rot/Grün über wsSendSignal() an Microcontroller - schwierig, da erst in this.moveStraightCommand() und mit delay gecheckt wird ob schritt möglich
       // commands-array mit objekten füllen: name: ..., id: ... & und überall commands[x].name abfragen //push as functions not as strings
@@ -71,14 +78,14 @@ export default class Navigator {
 
           if (cheese.isEaten) {
             self.levelSuccess = true;
-            console.log("win");
-
             labels.animateExecutionFeedback = true;
+
+            console.log("win");
           } else {
             self.levelFail = true;
-            console.log("loose");
-
             labels.animateExecutionFeedback = true;
+
+            console.log("loose");
           }
         }, 2000);
       }
@@ -107,11 +114,15 @@ export default class Navigator {
       this.levelFail = true;
       mouse.moveStraightAgaintBarrier();
       window.clearInterval(this.intervalID);
+      labels.animateExecutionFeedback = true;
+
       console.log("loose");
     }
   }
 
   reset(nextLevel) {
+    console.log("reset");
+
     // if (this.executing.boolean === false) {
     this.setUpLevel = true;
     this.executing.boolean = false;

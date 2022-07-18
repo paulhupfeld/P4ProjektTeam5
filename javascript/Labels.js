@@ -52,10 +52,10 @@ export default class Labels {
         this.img = this.winScreenImg;
         this.newImgPosition = { x: 655, y: 325, scale: 0.2 };
       } else if (levelFail) {
+        console.log("bildrein");
         this.img = this.looseScreenImg;
         this.newImgPosition = { x: 640, y: 330, scale: 0.23 };
       }
-
       gsap.to(this.imgPosition, {
         x: this.newImgPosition.x,
         y: this.newImgPosition.y,
@@ -64,16 +64,12 @@ export default class Labels {
         ease: "easeOut.config( 1, 0.3)",
       });
     }
-
     push();
     imageMode(CENTER, CENTER);
-
     translate(this.imgPosition.x, this.imgPosition.y);
     scale(this.imgPosition.scale);
     image(this.img, 0, 0);
-
     pop();
-
     this.animateExecutionFeedback = false;
   }
 
