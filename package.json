@@ -12,6 +12,12 @@
   "dependencies": {
     "express": "^4.18.1",
     "johnny-five": "^2.1.0",
-    "ws": "^8.8.0"
+    "ws": "^8.8.0",
+    "arduino-firmata": "^0.3.4"
+  },
+  "optionalDependencies": {
+    "browser-serialport": "latest",
+    "firmata": "^2.2.0",
+    "serialport": "^8.0.5"
   }
 }

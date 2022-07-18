@@ -23,18 +23,17 @@ export default class Navigator {
     // Listen for messages
     this.socket.addEventListener("message", function (event) {
       console.log("Received message =>", event.data);
-
-      //bei Empfangen von START-SIGNAL + Array mit IDs:
-      //IDS mit translateIDIntoCommands übersetzen
-      //commands in array pushen
-      //this.navigateCommands(); function wird gerade in sketch.js -> mouseClick ausgeführt
-
-      //bei Empfangen von STOP-SIGNAL:
-      //zeige Error-Nachricht +
-      // this.reset(); setze Level zurück
     });
 
-    console.log("setcommands");
+    //bei Empfangen von START-SIGNAL + Array mit IDs:
+    //IDS mit translateIDIntoCommands übersetzen
+    //commands in array pushen
+    //this.navigateCommands(); function wird gerade in sketch.js -> mouseClick ausgeführt
+
+    //bei Empfangen von STOP-SIGNAL:
+    //zeige Error-Nachricht +
+    // this.reset(); setze Level zurück
+
     this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
   }
 

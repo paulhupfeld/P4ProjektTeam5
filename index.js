@@ -3,6 +3,11 @@ const app = express();
 const server = require("http").createServer(app);
 const WebSocket = require("ws");
 
+const { Board, Led } = require("johnny-five");
+const board = new Board();
+// var five = require("johnny-five");
+// var board = new five.Board({ port: "/dev/tty.usbmodem11101" });
+
 const wss = new WebSocket.Server({ server: server });
 
 wss.on("connection", (ws) => {
@@ -15,8 +20,14 @@ wss.on("connection", (ws) => {
 });
 
 // app.get("/", (req, res) => res.send("Hello World!"));
+server.listen(3000, () => console.log(`Listening on port: 3000`));
 
-// server.listen(3000, () => console.log(`Listening on port: 3000`));
+board.on("ready", () => {
+  console.log("Ready!");
+
+  const led = new Led(13);
+  led.blink(1000);
+});
 
 //bei Start-Signal von Start-Button: setzte let start = true
 //sobald start === true: frage IDs ab + setze start = false
