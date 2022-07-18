@@ -5,20 +5,16 @@ const server = require("http").createServer(app);
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server: server });
 
-let commands = JSON.stringify([
-  "moveStraight",
-  "turnLeft",
-  "moveStraight",
-  "eatCheese",
-]);
+let startMessage = JSON.stringify({
+  message: "start",
+  commands: ["moveStraight", "turnLeft", "moveStraight", "eatCheese"],
+});
 
 wss.on("connection", (ws) => {
   console.log("A new client connected");
 
-  // ws.send("hellow new client");
-
   setTimeout(function () {
-    ws.send(commands);
+    ws.send(startMessage);
   }, 1500);
 
   ws.on("message", (message) => {

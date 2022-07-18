@@ -7,7 +7,7 @@ export default class Navigator {
     this.intervalID;
     this.currentLevel = 1;
     this.setUpLevel = true;
-    this.commands = [];
+    this.commands = ["turnLeft", "moveStraight", "eatCheese"];
     this.executing = { boolean: false, command: "" };
     this.levelSuccess = false;
     this.levelFail = false;
@@ -17,7 +17,7 @@ export default class Navigator {
     let self = this;
 
     // Connection opened
-    this.socket.addEventListener("open", function (event) {
+    this.socket.addEventListener("open", function () {
       this.send("Hello From Client");
       console.log("Connected to WS Server");
     });
@@ -26,9 +26,12 @@ export default class Navigator {
     this.socket.addEventListener("message", function (event) {
       let receivedMessage = JSON.parse(event.data);
 
-      self.commands = receivedMessage;
-
-      self.navigateCommands();
+      if (receivedMessage.message === "start") {
+        self.commands = receivedMessage.commands;
+        self.navigateCommands();
+      } else if (receivedMessage.message === "error") {
+        self.reset();
+      }
 
       console.log("Received message =>", receivedMessage);
     });
@@ -37,12 +40,6 @@ export default class Navigator {
     //IDS mit translateIDIntoCommands übersetzen
     //commands in array pushen
     //this.navigateCommands(); function wird gerade in sketch.js -> mouseClick ausgeführt
-
-    //bei Empfangen von STOP-SIGNAL:
-    //zeige Error-Nachricht +
-    // this.reset(); setze Level zurück
-
-    // this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"];
   }
 
   wsSendSignal(id, color) {
@@ -111,10 +108,12 @@ export default class Navigator {
     if (functions.checkIfStepIsPossible(mouse, this.currentLevel)) {
       mouse.moveStraight();
     } else {
-      this.levelFail = true;
-      mouse.moveStraightAgaintBarrier();
-      window.clearInterval(this.intervalID);
-      labels.animateExecutionFeedback = true;
+      setTimeout(function () {
+        this.levelFail = true;
+        mouse.moveStraightAgaintBarrier();
+        window.clearInterval(this.intervalID);
+        labels.animateExecutionFeedback = true;
+      }, 2000);
 
       console.log("loose");
     }

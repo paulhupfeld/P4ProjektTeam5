@@ -13,16 +13,18 @@ function draw() {
 }
 
 function mouseClicked() {
-  //eigentlich beim drücken des startknopfs
-
+  //only if start-button is not conncected
   if (
     navigator.levelSuccess === false &&
     navigator.levelFail === false &&
     navigator.executing.boolean === false
   ) {
     navigator.navigateCommands();
-  } else if (
-    navigator.executing.boolean ||
+  } else if (navigator.executing.boolean) {
+    navigator.reset();
+  }
+
+  if (
     (navigator.levelSuccess &&
       mouseX >= 572 &&
       mouseX <= 622 &&

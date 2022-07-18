@@ -52,7 +52,6 @@ export default class Labels {
         this.img = this.winScreenImg;
         this.newImgPosition = { x: 655, y: 325, scale: 0.2 };
       } else if (levelFail) {
-        console.log("bildrein");
         this.img = this.looseScreenImg;
         this.newImgPosition = { x: 640, y: 330, scale: 0.23 };
       }
