@@ -1,12 +1,8 @@
+//Webserver:
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
 const WebSocket = require("ws");
-
-const { Board, Led } = require("johnny-five");
-const board = new Board();
-// var five = require("johnny-five");
-// var board = new five.Board({ port: "/dev/tty.usbmodem11101" });
 
 const wss = new WebSocket.Server({ server: server });
 
@@ -21,6 +17,11 @@ wss.on("connection", (ws) => {
 
 // app.get("/", (req, res) => res.send("Hello World!"));
 server.listen(3000, () => console.log(`Listening on port: 3000`));
+
+//Johnny-Five:
+var five = require("johnny-five");
+const board = new five.Board(); // five.Board({ port: "/dev/tty.usbmodem11101" });
+const { Led } = require("johnny-five");
 
 board.on("ready", () => {
   console.log("Ready!");
