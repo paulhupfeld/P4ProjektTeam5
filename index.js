@@ -21,55 +21,64 @@ const server = require("http").createServer(app);
 const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server: server });
 
+//Initialize variables:
+let startMessage = {};
+let stringifiedStartMessage;
+let communicateWithWeblient;
+
 //Reveive array mit ids from Arduino (via serialport):
 port.on("open", () => {
   console.log("serial port open");
 
   parser.on("data", (data) => {
     console.log("message from arduino:", data);
-  });
 
-  // port.write("SYST:ADDR?\n", function (err) {
-  //   if (err) {
-  //     return console.log("Error on write: ", err.message);
-  //   }
-  // });
+    //if data. ... === "start"
+
+    //tranlate data create startMessage-object...
+    startMessage = {
+      message: "start",
+      commands: [
+        { command: "moveStraight", id: "1000" },
+        { command: "turnLeft", id: "0100" },
+        { command: "moveStraight", id: "0010" },
+        { command: "turnLeft", id: "0001" },
+      ],
+    };
+
+    communicateWithWeblient();
+  });
 });
 
 //Send Array with command-objects and receive object with enlightenment info to/from webClient (via websocket):
-let startMessage = JSON.stringify({
-  message: "start",
-  commands: [
-    { command: "moveStraight", id: "1000" },
-    { command: "turnLeft", id: "0100" },
-    { command: "moveStraight", id: "0010" },
-    { command: "turnLeft", id: "0001" },
-  ],
-});
-
 wss.on("connection", (ws) => {
   console.log("A new client connected");
 
-  setTimeout(function () {
-    ws.send(startMessage);
-  }, 1500);
+  communicateWithWeblient = function communicator() {
+    stringifiedStartMessage = JSON.stringify(startMessage);
+
+    ws.send(stringifiedStartMessage);
+  };
 
   ws.on("message", (message) => {
-    console.log(`Received message => ${message}`);
+    console.log(`Received message from Client=> ${message}`);
 
     // let receivedMessage = JSON.parse(message);
 
-    // console.log(`Parsed message => ${receivedMessage}`);
+    sendMessageToArduino();
   });
 });
 
 server.listen(3000, () => console.log(`Listening on port: 3000`));
 
-//Send objekt with enlightenment info to Arduino (via serialport):
-setTimeout(function () {
-  port.write("<enlight, 1011, 1>");
-  console.log("hi");
-}, 10000);
+// Send objekt with enlightenment info to Arduino (via serialport):
+function sendMessageToArduino() {
+  setTimeout(function () {
+    port.write("<enlight, 1011, 1>");
+  }, 10000);
+}
+
+//---
 
 //bei Start-Signal von Start-Button: setzte let start = true
 //sobald start === true: frage IDs ab + setze start = false
