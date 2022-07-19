@@ -7,7 +7,12 @@ export default class Navigator {
     this.intervalID;
     this.currentLevel = 1;
     this.setUpLevel = true;
-    this.commands = ["turnLeft", "moveStraight", "eatCheese"];
+    this.commands = [
+      { command: "moveStraight", id: "1000" },
+      { command: "turnLeft", id: "0100" },
+      { command: "moveStraight", id: "0010" },
+      { command: "turnLeft", id: "0001" },
+    ];
     this.executing = { boolean: false, command: "" };
     this.levelSuccess = false;
     this.levelFail = false;
@@ -42,11 +47,30 @@ export default class Navigator {
     //this.navigateCommands(); function wird gerade in sketch.js -> mouseClick ausgeführt
   }
 
-  wsSendSignal(id, color) {
-    // // Send a message
-    // const sendMessage = () => {
-    //   this.send("Hello From Client1!");
-    // };
+  wsSendSignal(message, id, color) {
+    // this.socket.send(message, id, color);
+    // let messageToSend = JSON.stringify(1);
+    // ws.send(messageToSend);
+    // var str = [0, 33];
+    // let str_pretty1 = JSON.stringify(str);
+    // this.socket.send(str_pretty1);
+
+    // create a TypedArray with a size in bytes
+    // const typedArray1 = new Int8Array(8);
+    // typedArray1[0] = 32;
+    // const typedArray2 = new Int8Array(typedArray1);
+    // typedArray2[1] = 42;
+    // console.log(typedArray1);
+    // expected output: Int8Array [32, 0, 0, 0, 0, 0, 0, 0]
+    // console.log(typedArray2);
+    // expected output: Int8Array [32, 42, 0, 0, 0, 0, 0, 0]
+
+    // var data = ["a", "b", "c", "d"];
+    // let startMessage = JSON.stringify(data);
+
+    console.log(message, id, color);
+
+    this.socket.send("hello");
   }
 
   navigateCommands() {
@@ -56,9 +80,11 @@ export default class Navigator {
     let self = this;
 
     function myInterval() {
-      let currentCommand = self.commands[intervalCount];
+      let currentCommand = self.commands[intervalCount].command;
       self.executing.command = currentCommand;
+      let currentID = self.commands[intervalCount].id;
 
+      self.wsSendSignal("enlight", currentID, "green");
       // Sende Signal mit ID & Rot/Grün über wsSendSignal() an Microcontroller - schwierig, da erst in this.moveStraightCommand() und mit delay gecheckt wird ob schritt möglich
       // commands-array mit objekten füllen: name: ..., id: ... & und überall commands[x].name abfragen //push as functions not as strings
 
@@ -135,8 +161,12 @@ export default class Navigator {
     }
 
     //wird normalerweise durch durch wsNavigator gesetzt
-    this.commands = ["moveStraight", "turnLeft", "moveStraight", "eatCheese"]; //hier weg
-    // }
+    this.commands = [
+      { command: "moveStraight", id: "1000" },
+      { command: "turnLeft", id: "0100" },
+      { command: "moveStraight", id: "0010" },
+      { command: "turnLeft", id: "0001" },
+    ]; //hier weg
   }
 
   display() {

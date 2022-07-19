@@ -7,7 +7,12 @@ const wss = new WebSocket.Server({ server: server });
 
 let startMessage = JSON.stringify({
   message: "start",
-  commands: ["moveStraight", "turnLeft", "moveStraight", "eatCheese"],
+  commands: [
+    { command: "moveStraight", id: "1000" },
+    { command: "turnLeft", id: "0100" },
+    { command: "moveStraight", id: "0010" },
+    { command: "turnLeft", id: "0001" },
+  ],
 });
 
 wss.on("connection", (ws) => {
@@ -17,12 +22,18 @@ wss.on("connection", (ws) => {
     ws.send(startMessage);
   }, 1500);
 
-  ws.on("message", (message) => {
-    console.log(`Received message => ${message}`);
-  });
+  // ws.on("message", (message) => {
+  //   console.log(message);
+  //   console.log(message.data);
+
+  //   let receivedMessage = JSON.parse(message.data);
+  //   console.log(`Received message => ${receivedMessage}`);
+
+  //   // let receivedMessage = JSON.parse(message);
+
+  //   // let it = message[1];
 });
 
-// app.get("/", (req, res) => res.send("Hello World!"));
 server.listen(3000, () => console.log(`Listening on port: 3000`));
 
 //Johnny-Five:
