@@ -68,9 +68,12 @@ export default class Navigator {
     // var data = ["a", "b", "c", "d"];
     // let startMessage = JSON.stringify(data);
 
-    console.log(message, id, color);
+    let data = { message: "enlight", id: "0100", color: "1" };
+    let stringifyedData = JSON.stringify(data);
 
-    this.socket.send("hello");
+    // console.log(message, id, color);
+
+    this.socket.send(data);
   }
 
   navigateCommands() {

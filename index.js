@@ -22,31 +22,55 @@ wss.on("connection", (ws) => {
     ws.send(startMessage);
   }, 1500);
 
-  // ws.on("message", (message) => {
-  //   console.log(message);
-  //   console.log(message.data);
+  ws.on("message", (message) => {
+    console.log(`Received message => ${message}`);
 
-  //   let receivedMessage = JSON.parse(message.data);
-  //   console.log(`Received message => ${receivedMessage}`);
+    // let receivedMessage = JSON.parse(message);
 
-  //   // let receivedMessage = JSON.parse(message);
-
-  //   // let it = message[1];
+    // console.log(`Parsed message => ${receivedMessage}`);
+  });
 });
 
 server.listen(3000, () => console.log(`Listening on port: 3000`));
 
-//Johnny-Five:
-var five = require("johnny-five");
-const board = new five.Board(); // five.Board({ port: "/dev/tty.usbmodem11101" });
-const { Led } = require("johnny-five");
+//---
 
-board.on("ready", () => {
-  console.log("Ready!");
+//Serialport:
+const SerialPort = require("serialport");
+const Readline = SerialPort.parsers.Readline;
 
-  const led = new Led(13);
-  led.blink(1000);
+const port = new SerialPort(
+  "/dev/tty.usbmodem11101",
+  { baudRate: 9600 },
+  function (err) {
+    if (err) {
+      return console.log("Error: ", err.message);
+    }
+  }
+);
+
+const parser = port.pipe(new Readline({ delimiter: "\n" }));
+
+port.on("open", () => {
+  console.log("serial port open");
+
+  parser.on("data", (data) => {
+    console.log("message from arduino:", data);
+  });
+
+  // port.write("SYST:ADDR?\n", function (err) {
+  //   if (err) {
+  //     return console.log("Error on write: ", err.message);
+  //   }
+  // });
 });
+
+setTimeout(function () {
+  port.write("<enlight, 1011, 1>");
+  console.log("hi");
+}, 10000);
+
+//---
 
 //bei Start-Signal von Start-Button: setzte let start = true
 //sobald start === true: frage IDs ab + setze start = false
