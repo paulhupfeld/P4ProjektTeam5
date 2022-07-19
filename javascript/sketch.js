@@ -13,7 +13,7 @@ function draw() {
 }
 
 function mouseClicked() {
-  //only if start-button is not conncected
+  //only if start-button is not conected
   if (
     navigator.levelSuccess === false &&
     navigator.levelFail === false &&

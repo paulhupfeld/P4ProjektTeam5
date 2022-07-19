@@ -11,7 +11,7 @@ export default class Navigator {
       { command: "moveStraight", id: "1000" },
       { command: "turnLeft", id: "0100" },
       { command: "moveStraight", id: "0010" },
-      { command: "turnLeft", id: "0001" },
+      { command: "eatCheese", id: "0001" },
     ];
     this.executing = { boolean: false, command: "" };
     this.levelSuccess = false;
@@ -40,11 +40,6 @@ export default class Navigator {
 
       console.log("Received message =>", receivedMessage);
     });
-
-    //bei Empfangen von START-SIGNAL + Array mit IDs:
-    //IDS mit translateIDIntoCommands übersetzen
-    //commands in array pushen
-    //this.navigateCommands(); function wird gerade in sketch.js -> mouseClick ausgeführt
   }
 
   wsSendSignal(message, id, color) {
@@ -77,7 +72,6 @@ export default class Navigator {
   }
 
   navigateCommands() {
-    console.log("navigateCommands");
     this.executing.boolean = true;
     let intervalCount = 0;
     let self = this;
@@ -86,10 +80,20 @@ export default class Navigator {
       let currentCommand = self.commands[intervalCount].command;
       self.executing.command = currentCommand;
       let currentID = self.commands[intervalCount].id;
+      let colorToLight;
 
-      self.wsSendSignal("enlight", currentID, "green");
-      // Sende Signal mit ID & Rot/Grün über wsSendSignal() an Microcontroller - schwierig, da erst in this.moveStraightCommand() und mit delay gecheckt wird ob schritt möglich
-      // commands-array mit objekten füllen: name: ..., id: ... & und überall commands[x].name abfragen //push as functions not as strings
+      //check in which color led should light
+      if (
+        currentCommand === "moveStraight" &&
+        functions.checkIfStepIsPossible(mouse, self.currentLevel) === false
+      ) {
+        colorToLight = 0; //red = 0, green = 1
+      } else {
+        colorToLight = 1;
+      }
+
+      self.wsSendSignal("enlight", currentID, colorToLight);
+      // console.log("enlight", currentID, colorToLight);
 
       setTimeout(function () {
         self.executeCurrentCommand(currentCommand);
@@ -105,11 +109,13 @@ export default class Navigator {
           if (cheese.isEaten) {
             self.levelSuccess = true;
             labels.animateExecutionFeedback = true;
+            //self.wsSendSignal("enlightFinalLed", currentID, 1);
 
             console.log("win");
           } else {
             self.levelFail = true;
             labels.animateExecutionFeedback = true;
+            //self.wsSendSignal("enlightFinalLed", currentID, 1);
 
             console.log("loose");
           }
@@ -151,7 +157,6 @@ export default class Navigator {
   reset(nextLevel) {
     console.log("reset");
 
-    // if (this.executing.boolean === false) {
     this.setUpLevel = true;
     this.executing.boolean = false;
     this.levelSuccess = false;
@@ -162,14 +167,6 @@ export default class Navigator {
     if (nextLevel) {
       this.currentLevel++;
     }
-
-    //wird normalerweise durch durch wsNavigator gesetzt
-    this.commands = [
-      { command: "moveStraight", id: "1000" },
-      { command: "turnLeft", id: "0100" },
-      { command: "moveStraight", id: "0010" },
-      { command: "turnLeft", id: "0001" },
-    ]; //hier weg
   }
 
   display() {

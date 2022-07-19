@@ -42,7 +42,7 @@ port.on("open", () => {
         { command: "moveStraight", id: "1000" },
         { command: "turnLeft", id: "0100" },
         { command: "moveStraight", id: "0010" },
-        { command: "turnLeft", id: "0001" },
+        { command: "eatCheese", id: "0001" },
       ],
     };
 
@@ -65,7 +65,7 @@ wss.on("connection", (ws) => {
 
     // let receivedMessage = JSON.parse(message);
 
-    sendMessageToArduino();
+    sendMessageToArduino(); //receivedMessage. ... übergeben
   });
 });
 
@@ -73,6 +73,8 @@ server.listen(3000, () => console.log(`Listening on port: 3000`));
 
 // Send objekt with enlightenment info to Arduino (via serialport):
 function sendMessageToArduino() {
+  //"<enlight, 1011, 1>" aus variablen basteln
+
   setTimeout(function () {
     port.write("<enlight, 1011, 1>");
   }, 10000);
