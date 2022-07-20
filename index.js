@@ -2,7 +2,7 @@
 const SerialPort = require("serialport");
 const Readline = SerialPort.parsers.Readline;
 const port = new SerialPort(
-  "/dev/tty.usbmodem11101",
+  "COM7",
   { baudRate: 9600 },
   function (err) {
     if (err) {

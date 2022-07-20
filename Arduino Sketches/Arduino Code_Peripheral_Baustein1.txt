@@ -1,0 +1,89 @@
+//codeexample for arduino<->slave comunication written by Nick Gammon in April 2011 http://www.gammon.com.au/spi
+//codeexample for LED control (ineffective) from https://circuitdigest.com/microcontroller-projects/arduino-spi-communication-tutorial
+
+#define LEDpin 7   
+
+// what to do with incoming data
+byte command = 0;
+byte Slavereceived;
+volatile boolean received;
+
+// start of transaction, no command yet
+void ss_falling ()
+{
+  command = 0;
+}  // end of interrupt service routine (ISR) ss_falling
+
+
+void setup (void)
+{
+
+  // Setting pin 7 as OUTPUT
+  pinMode(LEDpin,OUTPUT);
+  // have to send on master in, *slave out*
+  pinMode(MISO, OUTPUT);
+
+  // turn on SPI in slave mode
+  SPCR |= _BV(SPE);
+  received = false; 
+  // turn on interrupts
+  SPCR |= _BV(SPIE);
+
+    // interrupt for SS falling edge
+  attachInterrupt (0, ss_falling, FALLING);
+}  // end of setup
+
+
+// SPI interrupt routine
+ISR (SPI_STC_vect)
+{
+  int c = SPDR;
+
+ 
+  switch (command)
+  {
+  // no command? then this is the command
+  case 0:
+    command = c;
+    SPDR = 0;
+    break;
+    
+  // add to incoming byte, return result
+  case 'a':
+    SPDR = 1;  // return ID 1
+    break;
+    
+  // subtract from incoming byte, return result
+  case 'L':     //turn on corresponding LED
+    Slavereceived = SPDR;    // Value received from master if store in variable slavereceived  
+    received = true;        //Sets received as True    
+       //Logic to SET LED ON OR OFF depending upon the value received from master
+   if(received){
+      if (Slavereceived==10){
+         //Sets pin 7 as HIGH LED ON
+         digitalWrite(LEDpin,HIGH);     
+         Serial.println("Slave LED ON");
+      
+      }else{
+         //Sets pin 7 as LOW LED OFF
+         digitalWrite(LEDpin,LOW);          
+         Serial.println("Slave LED OFF");
+      }
+   }               
+  //break;
+
+  } // end of switch
+
+}  // end of interrupt service routine (ISR) SPI_STC_vect
+
+void loop (void)
+{
+  
+
+
+  // if SPI not active, clear current command
+  if (digitalRead (SS) == HIGH){
+    command = 0;
+  } 
+ 
+}  // end of loop

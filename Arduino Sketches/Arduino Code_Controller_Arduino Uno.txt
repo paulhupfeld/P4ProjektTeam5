@@ -1,0 +1,217 @@
+//codeexample for arduino<->slave comunication written by Nick Gammon in April 2011 http://www.gammon.com.au/spi
+//codeexample for node<->arduino comunication from https://forum.arduino.cc/t/serial-input-basics-updated/382007/3
+//codeexample for LED control (ineffective) from https://circuitdigest.com/microcontroller-projects/arduino-spi-communication-tutorial
+
+#include <SPI.h>
+
+#define PIN_SLAVE_SELECT 10 // SS (Slave Select)
+#define PIN_SLAVE_SELECT 9 // SS (Slave Select)
+#define PIN_SLAVE_SELECT 8 // SS (Slave Select)
+#define PIN_SLAVE_SELECT 7 // SS (Slave Select)
+
+
+
+const byte numChars = 32;
+char receivedChars[numChars];
+char tempChars[numChars];        // temporary array for use when parsing
+
+// variables to hold the parsed data:
+char messageFromPC[numChars] = {0};
+int idFromPC = 0;
+int colorFromPC = 0;
+int arrayForPC = 0;
+
+
+boolean newData = false;
+boolean sendDataOnce = true;
+
+void setup (void)
+{
+  Serial.begin (115200);
+  Serial.println ();
+  
+  digitalWrite(SS, HIGH);  // ensure SS stays high for now
+
+  // Put SCK, MOSI, SS pins into output mode
+  // also put SCK, MOSI into LOW state, and SS into HIGH state.
+  // Then put SPI hardware into Master mode and turn SPI on
+  SPI.begin ();
+
+  // Slow down the master a bit
+  SPI.setClockDivider(SPI_CLOCK_DIV8);
+
+  Serial.begin(9600);
+    
+    //Serial.println("This demo expects 3 pieces of data - text, an integer and a floating point value. Enter data in this style <HelloWorld, 12, 24>");
+    //Serial.println("start, 1000, 0010, 0100, 0001");
+}  // end of setup
+
+int transferAndWait (const int what)
+{
+  int a = SPI.transfer (what);
+  delayMicroseconds (100);
+  return a;
+} // end of transferAndWait
+
+void loop (void)
+{
+  
+if (sendDataOnce == true) {
+  int a, b, c, d;
+  
+  // enable Slave Select
+  digitalWrite(10, LOW);    
+
+  transferAndWait ('a');  // request ID from slave
+  transferAndWait (10);   //with values like 'Lo' it always sends the Slave the ASCII-value of the last character: e.g. 'Lo' => 111 = 'o'
+  a = transferAndWait (0); //after SPDR has been loaded in the Slave code the master has to prompt another SPI exchange to get the response; so we just send 0 here
+//  b = transferAndWait ('L2');
+//  c = transferAndWait ('L3');
+//  d = transferAndWait ('L4');
+
+  // disable Slave Select
+  digitalWrite(10, HIGH);
+
+  Serial.println ("Return ID:");
+  Serial.println (a);
+//  Serial.println (b, DEC);
+//  Serial.println (c, DEC);
+//  Serial.println (d, DEC);
+
+
+  
+ // enable Slave Select
+  digitalWrite(9, LOW);    
+
+  transferAndWait ('a');  // request ID from slave
+  transferAndWait (10);   //with values like 'Lo' it always sends the Slave the ASCII-value of the last character: e.g. 'Lo' => 111 = 'o'
+  a = transferAndWait (0); //after SPDR has been loaded in the Slave code the master has to prompt another SPI exchange to get the response; so we just send 0 here
+//  b = transferAndWait ('L2');
+//  c = transferAndWait ('L3');
+//  d = transferAndWait ('L4');
+
+  // disable Slave Select
+  digitalWrite(9, HIGH);
+
+  Serial.println ("Return ID:");
+  Serial.println (a);
+//  Serial.println (b, DEC);
+//  Serial.println (c, DEC);
+//  Serial.println (d, DEC);
+
+delay (1000);  // 1 second delay 
+
+// enable Slave Select
+  digitalWrite(8, LOW);    
+
+  transferAndWait ('a');  // request ID from slave
+  transferAndWait (10);   //with values like 'Lo' it always sends the Slave the ASCII-value of the last character: e.g. 'Lo' => 111 = 'o'
+  a = transferAndWait (0); //after SPDR has been loaded in the Slave code the master has to prompt another SPI exchange to get the response; so we just send 0 here
+//  b = transferAndWait ('L2');
+//  c = transferAndWait ('L3');
+//  d = transferAndWait ('L4');
+
+  // disable Slave Select
+  digitalWrite(8, HIGH);
+
+  Serial.println ("Return ID:");
+  Serial.println (a);
+//  Serial.println (b, DEC);
+//  Serial.println (c, DEC);
+//  Serial.println (d, DEC);
+  
+  delay (1000);  // 1 second delay 
+
+  // enable Slave Select
+  digitalWrite(7, LOW);    
+
+  transferAndWait ('a');  // request ID from slave
+  transferAndWait (10);   //with values like 'Lo' it always sends the Slave the ASCII-value of the last character: e.g. 'Lo' => 111 = 'o'
+  a = transferAndWait (0); //after SPDR has been loaded in the Slave code the master has to prompt another SPI exchange to get the response; so we just send 0 here
+//  b = transferAndWait ('L2');
+//  c = transferAndWait ('L3');
+//  d = transferAndWait ('L4');
+
+  // disable Slave Select
+  digitalWrite(7, HIGH);
+
+  Serial.println ("Return ID:");
+  Serial.println (a);
+//  Serial.println (b, DEC);
+//  Serial.println (c, DEC);
+//  Serial.println (d, DEC);
+  
+  delay (1000);  // 1 second delay 
+}
+
+   recvWithStartEndMarkers();
+    if (newData == true) {
+        strcpy(tempChars, receivedChars);
+            // this temporary copy is necessary to protect the original data
+            // because strtok() used in parseData() replaces the commas with \0
+        parseData();
+        showParsedData();
+        newData = false;
+    }
+}  // end of loop
+
+
+void recvWithStartEndMarkers() {
+    static boolean recvInProgress = false;
+    static byte ndx = 0;
+    char startMarker = '<';
+    char endMarker = '>';
+    char rc;
+
+    while (Serial.available() > 0 && newData == false) {
+        rc = Serial.read();
+
+        if (recvInProgress == true) {
+            if (rc != endMarker) {
+                receivedChars[ndx] = rc;
+                ndx++;
+                if (ndx >= numChars) {
+                    ndx = numChars - 1;
+                }
+            }
+            else {
+                receivedChars[ndx] = '\0'; // terminate the string
+                recvInProgress = false;
+                ndx = 0;
+                newData = true;
+            }
+        }
+
+        else if (rc == startMarker) {
+            recvInProgress = true;
+        }
+    }
+}
+
+
+void parseData() {      // split the data into its parts
+
+    char * strtokIndx; // this is used by strtok() as an index
+
+    strtokIndx = strtok(tempChars,",");      // get the first part - the string
+    strcpy(messageFromPC, strtokIndx); // copy it to messageFromPC
+ 
+    strtokIndx = strtok(NULL, ","); // this continues where the previous call left off
+    idFromPC = atoi(strtokIndx);     // convert this part to an integer
+
+    strtokIndx = strtok(NULL, ",");
+    colorFromPC = atoi(strtokIndx);     // convert this part to an integer
+
+}
+
+
+void showParsedData() {
+  /*
+    Serial.print("Message: ");
+    Serial.println(messageFromPC);
+    Serial.print("Id: ");
+    Serial.println(idFromPC);
+    Serial.print("Color: ");
+    Serial.println(colorFromPC);
+*/
+}
