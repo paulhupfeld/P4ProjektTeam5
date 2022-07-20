@@ -8,7 +8,7 @@ export default class Navigator {
     this.currentLevel = 1;
     this.setUpLevel = true;
     this.commands = [
-      // { command: "moveStraight", id: "1000" },
+      { command: "moveStraight", id: "1000" },
       { command: "turnLeft", id: "0100" },
       { command: "moveStraight", id: "0010" },
       { command: "eatCheese", id: "0001" },
