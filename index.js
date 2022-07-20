@@ -46,7 +46,7 @@ port.on("open", () => {
           startMessage.message = item;
         } else {
           startMessage.commands[arrayCount - 1] = {
-            command: returnCommandFromId(item), //translate!!
+            command: returnCommandFromId(item),
             id: item,
           };
         }
@@ -56,6 +56,8 @@ port.on("open", () => {
 
       communicateWithWeblient();
     }
+
+    //if signal error: ws.send("errormessage");
   });
 });
 
@@ -69,7 +71,6 @@ wss.on("connection", (ws) => {
   };
 
   ws.on("message", (data) => {
-    // console.log("message received");
     console.log(`Received message from Client=> ${data}`);
     // console.log(data); //hier als <Buffer 65 6e 6c 69 67 68 74 2c 20 30 30 30 31 0d 2c 20 31>
 
@@ -103,7 +104,7 @@ function returnCommandFromId(item) {
   } else if (item === "0010") {
     command = "turnLeft";
   } else if (item === "0001\r") {
-    //ohne \r
+    //!!!ohne \r
     command = "eatCheese";
   }
 
