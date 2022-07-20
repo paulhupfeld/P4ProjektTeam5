@@ -30,8 +30,6 @@ export default class Navigator {
     this.socket.addEventListener("message", function (event) {
       let receivedMessage = JSON.parse(event.data);
 
-      console.log(receivedMessage);
-
       if (receivedMessage.message === "start") {
         self.commands = receivedMessage.commands;
         self.navigateCommands();
@@ -45,9 +43,6 @@ export default class Navigator {
 
   wsSendSignal(message, id, color) {
     let data = message + ", " + id + ", " + color;
-
-    // let stringifyedData = JSON.stringify(data);
-    // console.log("sent:" + data);
 
     this.socket.send(data);
   }
@@ -69,9 +64,6 @@ export default class Navigator {
         functions.checkIfStepIsPossible(mouse, self.currentLevel) === false
       ) {
         colorToLight = 0; //red = 0, green = 1
-        // this.levelFail = false;
-        // labels.animateExecutionFeedback = true;
-        // console.log("fail");
       } else {
         colorToLight = 1;
       }
@@ -92,13 +84,11 @@ export default class Navigator {
           if (cheese.isEaten) {
             self.levelSuccess = true;
             labels.animateExecutionFeedback = true;
-            //self.wsSendSignal("enlightFinalLed", currentID, 1);
 
             console.log("win");
           } else {
             self.levelFail = true;
             labels.animateExecutionFeedback = true;
-            //self.wsSendSignal("enlightFinalLed", currentID, 1);
 
             console.log("loose");
           }

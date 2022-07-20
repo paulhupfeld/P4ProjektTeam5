@@ -1,15 +1,11 @@
 //Initialize serialport:
 const SerialPort = require("serialport");
 const Readline = SerialPort.parsers.Readline;
-const port = new SerialPort(
-  "COM7",
-  { baudRate: 9600 },
-  function (err) {
-    if (err) {
-      return console.log("Error: ", err.message);
-    }
+const port = new SerialPort("COM7", { baudRate: 9600 }, function (err) {
+  if (err) {
+    return console.log("Error: ", err.message);
   }
-);
+});
 const parser = port.pipe(new Readline({ delimiter: "\n" }));
 
 //Initialize webserver:
@@ -35,7 +31,7 @@ port.on("open", () => {
   parser.on("data", (data) => {
     console.log("message from arduino:", data);
 
-    dataAsArray = data.replace("\r", "").split(", "); //!!!\r am Ende weg
+    dataAsArray = data.replace("\r", "").split(", ");
 
     if (dataAsArray[0] === "start") {
       let arrayCount = 0;
@@ -56,8 +52,6 @@ port.on("open", () => {
 
       communicateWithWeblient();
     }
-
-    //if signal error: ws.send("errormessage");
   });
 });
 
@@ -85,8 +79,6 @@ server.listen(3000, () => console.log(`Listening on port: 3000`));
 function sendDataToArduino(recievedData) {
   port.write(recievedData);
 }
-
-//sobald Verbindung zu Arduino abbricht: Sende STOP-Signal an JS
 
 function returnCommandFromId(item) {
   //import translations from idTranslations.js
