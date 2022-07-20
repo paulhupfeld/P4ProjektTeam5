@@ -35,8 +35,7 @@ port.on("open", () => {
   parser.on("data", (data) => {
     console.log("message from arduino:", data);
 
-    dataAsArray = data.split(", ");
-    console.log(dataAsArray);
+    dataAsArray = data.split(", "); //!!!\r am Ende weg
 
     if (dataAsArray[0] === "start") {
       //tranlate data create startMessage-object...
@@ -47,23 +46,13 @@ port.on("open", () => {
           startMessage.message = item;
         } else {
           startMessage.commands[arrayCount - 1] = {
-            command: "moveStraight", //translate!!
+            command: returnCommandFromId(item), //translate!!
             id: item,
           };
         }
 
         arrayCount++;
       });
-
-      // startMessage = {
-      //   message: "start",
-      //   commands: [
-      //     { command: "moveStraight", id: "1000" },
-      //     { command: "turnLeft", id: "0100" },
-      //     { command: "moveStraight", id: "0010" },
-      //     { command: "eatCheese", id: "0001" },
-      //   ],
-      // };
 
       communicateWithWeblient();
     }
@@ -77,7 +66,6 @@ wss.on("connection", (ws) => {
   communicateWithWeblient = function communicator() {
     stringifiedStartMessage = JSON.stringify(startMessage);
     ws.send(stringifiedStartMessage);
-    console.log("sent: " + stringifiedStartMessage);
   };
 
   ws.on("message", (data) => {
@@ -104,11 +92,26 @@ function sendDataToArduino(recievedData) {
     recievedData.light +
     ">";
 
-  console.log(dataToSend);
-
   setTimeout(function () {
     port.write(dataToSend);
   }, 10000);
 }
 
 //sobald Verbindung zu Arduino abbricht: Sende STOP-Signal an JS
+
+function returnCommandFromId(item) {
+  let command;
+
+  if (item === "1000") {
+    command = "moveStraight";
+  } else if (item === "0100") {
+    command = "moveStraight";
+  } else if (item === "0010") {
+    command = "turnLeft";
+  } else if (item === "0001\r") {
+    //ohne \r
+    command = "eatCheese";
+  }
+
+  return command;
+}
