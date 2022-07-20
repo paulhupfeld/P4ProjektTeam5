@@ -38,9 +38,9 @@ port.on("open", () => {
     dataAsArray = data.split(", "); //!!!\r am Ende weg
 
     if (dataAsArray[0] === "start") {
-      //tranlate data create startMessage-object...
-
       let arrayCount = 0;
+
+      //create startMessage-object
       dataAsArray.forEach(function (item) {
         if (arrayCount === 0) {
           startMessage.message = item;
@@ -69,10 +69,13 @@ wss.on("connection", (ws) => {
   };
 
   ws.on("message", (data) => {
+    // console.log("message received");
     console.log(`Received message from Client=> ${data}`);
+    // console.log(data); //hier als <Buffer 65 6e 6c 69 67 68 74 2c 20 30 30 30 31 0d 2c 20 31>
 
-    //!!! need to receive object
-    // let receivedMessage = JSON.parse(message);
+    // console.log(JSON.parse(data));
+    //letzte nachricht unvollständig: "", 1eived message from Client=> enlight, 0001", sollte aber eig: "Received message from Client=> enlight, 0001, 1"
+
     let recievedData = { message: "enlight", id: 1000, light: 1 };
 
     sendDataToArduino(recievedData); //receivedMessage. ... übergeben

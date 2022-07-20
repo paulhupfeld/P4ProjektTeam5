@@ -43,30 +43,10 @@ export default class Navigator {
   }
 
   wsSendSignal(message, id, color) {
-    // this.socket.send(message, id, color);
-    // let messageToSend = JSON.stringify(1);
-    // ws.send(messageToSend);
-    // var str = [0, 33];
-    // let str_pretty1 = JSON.stringify(str);
-    // this.socket.send(str_pretty1);
+    let data = message + ", " + id + ", " + color;
 
-    // create a TypedArray with a size in bytes
-    // const typedArray1 = new Int8Array(8);
-    // typedArray1[0] = 32;
-    // const typedArray2 = new Int8Array(typedArray1);
-    // typedArray2[1] = 42;
-    // console.log(typedArray1);
-    // expected output: Int8Array [32, 0, 0, 0, 0, 0, 0, 0]
-    // console.log(typedArray2);
-    // expected output: Int8Array [32, 42, 0, 0, 0, 0, 0, 0]
-
-    // var data = ["a", "b", "c", "d"];
-    // let startMessage = JSON.stringify(data);
-
-    let data = { message: "enlight", id: "0100", color: "1" };
-    let stringifyedData = JSON.stringify(data);
-
-    // console.log(message, id, color);
+    // let stringifyedData = JSON.stringify(data);
+    // console.log("sent:" + data);
 
     this.socket.send(data);
   }
