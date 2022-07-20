@@ -93,7 +93,6 @@ export default class Navigator {
       }
 
       self.wsSendSignal("enlight", currentID, colorToLight);
-      // console.log("enlight", currentID, colorToLight);
 
       setTimeout(function () {
         self.executeCurrentCommand(currentCommand);

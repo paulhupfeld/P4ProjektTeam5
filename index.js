@@ -1,7 +1,6 @@
 //Initialize serialport:
 const SerialPort = require("serialport");
 const Readline = SerialPort.parsers.Readline;
-
 const port = new SerialPort(
   "/dev/tty.usbmodem11101",
   { baudRate: 9600 },
@@ -11,7 +10,6 @@ const port = new SerialPort(
     }
   }
 );
-
 const parser = port.pipe(new Readline({ delimiter: "\n" }));
 
 //Initialize webserver:
@@ -26,13 +24,14 @@ let startMessage = {};
 let stringifiedStartMessage;
 let communicateWithWeblient;
 
-//Reveive array mit ids from Arduino (via serialport):
+//Reveive object mit ids from Arduino (via serialport):
 port.on("open", () => {
   console.log("serial port open");
 
   parser.on("data", (data) => {
     console.log("message from arduino:", data);
 
+    //!!! need to receive object
     //if data. ... === "start"
 
     //tranlate data create startMessage-object...
@@ -56,37 +55,38 @@ wss.on("connection", (ws) => {
 
   communicateWithWeblient = function communicator() {
     stringifiedStartMessage = JSON.stringify(startMessage);
-
     ws.send(stringifiedStartMessage);
   };
 
-  ws.on("message", (message) => {
-    console.log(`Received message from Client=> ${message}`);
+  ws.on("message", (data) => {
+    console.log(`Received message from Client=> ${data}`);
 
+    //!!! need to receive object
     // let receivedMessage = JSON.parse(message);
+    let recievedData = { message: "enlight", id: 1000, light: 1 };
 
-    sendMessageToArduino(); //receivedMessage. ... übergeben
+    sendDataToArduino(recievedData); //receivedMessage. ... übergeben
   });
 });
 
 server.listen(3000, () => console.log(`Listening on port: 3000`));
 
 // Send objekt with enlightenment info to Arduino (via serialport):
-function sendMessageToArduino() {
-  //"<enlight, 1011, 1>" aus variablen basteln
+function sendDataToArduino(recievedData) {
+  let dataToSend =
+    "<" +
+    recievedData.message +
+    ", " +
+    recievedData.id +
+    ", " +
+    recievedData.light +
+    ">";
+
+  console.log(dataToSend);
 
   setTimeout(function () {
-    port.write("<enlight, 1011, 1>");
+    port.write(dataToSend);
   }, 10000);
 }
-
-//---
-
-//bei Start-Signal von Start-Button: setzte let start = true
-//sobald start === true: frage IDs ab + setze start = false
-//bei Antwort(en) der Microcontroller: speichere IDs in richtiger Reihenfolge in Array ab
-//sobald alle Antworten erhalten: sende Start-Signal + Array an JS
-
-//bei Leuchte-Befehl von J5: Sende Befehl leuchte grün/rot an Microcontroller mit genannter ID
 
 //sobald Verbindung zu Arduino abbricht: Sende STOP-Signal an JS
