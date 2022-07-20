@@ -20,7 +20,11 @@ const WebSocket = require("ws");
 const wss = new WebSocket.Server({ server: server });
 
 //Initialize variables:
-let startMessage = {};
+let dataAsArray;
+let startMessage = {
+  message: "",
+  commands: [],
+};
 let stringifiedStartMessage;
 let communicateWithWeblient;
 
@@ -31,21 +35,38 @@ port.on("open", () => {
   parser.on("data", (data) => {
     console.log("message from arduino:", data);
 
-    //!!! need to receive object
-    //if data. ... === "start"
+    dataAsArray = data.split(", ");
+    console.log(dataAsArray);
 
-    //tranlate data create startMessage-object...
-    startMessage = {
-      message: "start",
-      commands: [
-        { command: "moveStraight", id: "1000" },
-        { command: "turnLeft", id: "0100" },
-        { command: "moveStraight", id: "0010" },
-        { command: "eatCheese", id: "0001" },
-      ],
-    };
+    if (dataAsArray[0] === "start") {
+      //tranlate data create startMessage-object...
 
-    communicateWithWeblient();
+      let arrayCount = 0;
+      dataAsArray.forEach(function (item) {
+        if (arrayCount === 0) {
+          startMessage.message = item;
+        } else {
+          startMessage.commands[arrayCount - 1] = {
+            command: "moveStraight", //translate!!
+            id: item,
+          };
+        }
+
+        arrayCount++;
+      });
+
+      // startMessage = {
+      //   message: "start",
+      //   commands: [
+      //     { command: "moveStraight", id: "1000" },
+      //     { command: "turnLeft", id: "0100" },
+      //     { command: "moveStraight", id: "0010" },
+      //     { command: "eatCheese", id: "0001" },
+      //   ],
+      // };
+
+      communicateWithWeblient();
+    }
   });
 });
 
@@ -56,6 +77,7 @@ wss.on("connection", (ws) => {
   communicateWithWeblient = function communicator() {
     stringifiedStartMessage = JSON.stringify(startMessage);
     ws.send(stringifiedStartMessage);
+    console.log("sent: " + stringifiedStartMessage);
   };
 
   ws.on("message", (data) => {
