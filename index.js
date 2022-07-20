@@ -35,7 +35,7 @@ port.on("open", () => {
   parser.on("data", (data) => {
     console.log("message from arduino:", data);
 
-    dataAsArray = data.split(", "); //!!!\r am Ende weg
+    dataAsArray = data.replace("\r", "").split(", "); //!!!\r am Ende weg
 
     if (dataAsArray[0] === "start") {
       let arrayCount = 0;
@@ -72,10 +72,6 @@ wss.on("connection", (ws) => {
 
   ws.on("message", (data) => {
     console.log(`Received message from Client=> ${data}`);
-    // console.log(data); //hier als <Buffer 65 6e 6c 69 67 68 74 2c 20 30 30 30 31 0d 2c 20 31>
-
-    // console.log(JSON.parse(data));
-    //!!! letzte nachricht unvollständig: "enlight, 0001",
 
     let transformedData = `<${data}>`;
 
@@ -103,8 +99,7 @@ function returnCommandFromId(item) {
     command = "moveStraight";
   } else if (item === "0010") {
     command = "turnLeft";
-  } else if (item === "0001\r") {
-    //!!!ohne \r
+  } else if (item === "0001") {
     command = "eatCheese";
   }
 
