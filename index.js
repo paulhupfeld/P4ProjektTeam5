@@ -74,11 +74,11 @@ wss.on("connection", (ws) => {
     // console.log(data); //hier als <Buffer 65 6e 6c 69 67 68 74 2c 20 30 30 30 31 0d 2c 20 31>
 
     // console.log(JSON.parse(data));
-    //letzte nachricht unvollständig: "", 1eived message from Client=> enlight, 0001", sollte aber eig: "Received message from Client=> enlight, 0001, 1"
+    //!!! letzte nachricht unvollständig: "enlight, 0001",
 
-    let recievedData = { message: "enlight", id: 1000, light: 1 };
+    let transformedData = `<${data}>`;
 
-    sendDataToArduino(recievedData); //receivedMessage. ... übergeben
+    sendDataToArduino(transformedData);
   });
 });
 
@@ -86,23 +86,14 @@ server.listen(3000, () => console.log(`Listening on port: 3000`));
 
 // Send objekt with enlightenment info to Arduino (via serialport):
 function sendDataToArduino(recievedData) {
-  let dataToSend =
-    "<" +
-    recievedData.message +
-    ", " +
-    recievedData.id +
-    ", " +
-    recievedData.light +
-    ">";
-
-  setTimeout(function () {
-    port.write(dataToSend);
-  }, 10000);
+  port.write(recievedData);
 }
 
 //sobald Verbindung zu Arduino abbricht: Sende STOP-Signal an JS
 
 function returnCommandFromId(item) {
+  //import translations from idTranslations.js
+
   let command;
 
   if (item === "1000") {

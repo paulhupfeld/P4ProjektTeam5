@@ -23,7 +23,6 @@ export default class Navigator {
 
     // Connection opened
     this.socket.addEventListener("open", function () {
-      this.send("Hello From Client");
       console.log("Connected to WS Server");
     });
 
